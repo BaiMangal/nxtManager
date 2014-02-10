@@ -1,0 +1,94 @@
+﻿<Page x:Class="nxtManager.Pages.Peers"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:converters="clr-namespace:nxtManager.Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+	Title="Peers">
+    <Page.Resources>
+        <converters:PeerStateToVisibilityConverter x:Key="peerStateToVisibilityConverter" />
+        <converters:PeerWeightToVisibilityConverter x:Key="peerWeightToVisibilityConverter" />
+        <converters:PeerAddressToVisibilityConverter x:Key="peerAddressToVisibilityConverter" />
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="Active Peers" Margin="0 0 0 10" FontSize="18" />
+        <StackPanel Margin="0 0 0 10" Orientation="Horizontal" Grid.Row="1">
+            <TextBlock Text="Address" Width="200" Margin="7 2 2 2"  />
+            <TextBlock Text="Weight" Width="80" Margin="52 2 2 2" />
+            <TextBlock Text="Download" Width="80" Margin="26 2 2 2" />
+            <TextBlock Text="Upload" Width="80" Margin="26 2 2 2" />
+            <TextBlock Text="Software" Width="200" Margin="26 2 2 2" />
+        </StackPanel>
+        <ScrollViewer Grid.Row="2">
+            <ItemsControl x:Name="ActivePeersListBox" ItemsSource="{Binding NXTActivePeers}"  >
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="0 0 0 1" BorderBrush="LightGray" Margin="5">
+                            <StackPanel Margin="0 0 0 10" Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal" ToolTip="Announced Address">
+                                    <Grid>
+                                        <Image Source="/Images/peerConnected.png" Visibility="{Binding state, Converter={StaticResource peerStateToVisibilityConverter}, ConverterParameter=connected}" Margin="2" />
+                                        <Image Source="/Images/peerDisconnected.png" Visibility="{Binding state, Converter={StaticResource peerStateToVisibilityConverter}, ConverterParameter=disconnected}"  Margin="2" />
+                                    </Grid>
+                                    <Grid>
+                                        <Image Source="/Images/peerEnabledAnnouncedAddress.png"  Visibility="{Binding announcedAddress, Converter={StaticResource peerAddressToVisibilityConverter}, ConverterParameter=regular}"  Margin="2" />
+                                        <Image Source="/Images/peerWellKnownAddress.png"  Visibility="{Binding announcedAddress, Converter={StaticResource peerAddressToVisibilityConverter}, ConverterParameter=wellKnown}" Margin="2" />
+                                    </Grid>
+                                    <TextBlock Text="{Binding announcedAddress}" Width="200" Margin="2" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" ToolTip="Weight">
+                                    <Grid>
+                                        <Image Source="/Images/peerEnabledWeight.png" Margin="2" Visibility="{Binding weight, Converter={StaticResource peerWeightToVisibilityConverter}, ConverterParameter=positive}" />
+                                        <Image Source="/Images/peerDisabledWeight.png" Margin="2" Visibility="{Binding weight, Converter={StaticResource peerWeightToVisibilityConverter}, ConverterParameter=zero}" />
+                                    </Grid>
+                                    <TextBlock Text="{Binding weight}" Width="80" Margin="2" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" ToolTip="Downloaded Volume">
+                                    <Image Source="/Images/peerDownloading.png" Margin="2" />
+                                    <TextBlock Text="{Binding downloadedVolume, StringFormat=\{0\} B}" Width="80" Margin="2" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" ToolTip="Uploaded Volume">
+                                    <Image Source="/Images/peerUploading.png" Margin="2" />
+                                    <TextBlock Text="{Binding uploadedVolume, StringFormat=\{0\} B}" Width="80" Margin="2" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" ToolTip="Software">
+                                    <Image Source="/Images/peerSoftware.png" Margin="2" />
+                                    <TextBlock Text="{Binding formattedAppInfo}" Width="200" Margin="2" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        <TextBlock Text="Well Known Peers" Margin="0 40 0 10" Grid.Row="3" FontSize="18" />
+        <ScrollViewer Grid.Row="4">
+            <ItemsControl x:Name="WellKnownPeersListBox" ItemsSource="{Binding NXTWellKnownPeers}"  >
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="0 0 0 1" BorderBrush="LightGray" Margin="5">
+                            <StackPanel Margin="0 0 0 10" ToolTip="Announced Address" Orientation="Horizontal">
+                                <Image Source="/Images/peerWellKnownAddress.png" Width="20" Height="20"  Margin="2" />
+                                <TextBlock Text="{Binding announcedAddress}" Width="200" Margin="2" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Page>

@@ -1,0 +1,35 @@
+﻿<mui:ModernWindow x:Class="nxtManager.ModernVersion"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+                  ContentSource="/Pages/Console.xaml"
+                  xmlns:WPF="clr-namespace:ConsoleControl.WPF;assembly=ConsoleControl.WPF"
+                  Title="nxtManager" Height="300" Width="300"
+                  Icon="Images/logo.ico" WindowState="Maximized"
+                  >
+    <mui:ModernWindow.MenuLinkGroups>
+        <mui:LinkGroup DisplayName="NXT Manager (beta)" x:Name="MenuLinks" >
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="Account and Transactions" Source="/Pages/AccountAndTransactions.xaml" />
+                <mui:Link DisplayName="Peers" Source="/Pages/Peers.xaml" />
+                <mui:Link DisplayName="Blocks" Source="/Pages/Blocks.xaml" />
+                <mui:Link DisplayName="Aliases" Source="/Pages/Aliases.xaml" />
+                <!--<mui:Link DisplayName="System State" Source="/Pages/State.xaml" />-->
+                <mui:Link DisplayName="Console" Source="/Pages/Console.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+    </mui:ModernWindow.MenuLinkGroups>
+    <Grid>
+        <WPF:ConsoleControl x:Name="consoleControl" 
+                        x:FieldModifier="public"
+                        SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" 
+                        ScrollViewer.CanContentScroll="True" 
+                        ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch" 
+                        Visibility="Visible"
+                        >
+
+        </WPF:ConsoleControl>
+    </Grid>
+</mui:ModernWindow>

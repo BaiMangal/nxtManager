@@ -1,0 +1,29 @@
+﻿<mui:ModernDialog x:Class="nxtManager.SendMoneyDialog"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+                  Title="Send money"  Width="606" Height="215">
+    <StackPanel Margin="20">
+        <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+            <TextBlock Text="Recipient: "  Width="150" />
+            <TextBox Text="{Binding Recipient, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="400" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+            <TextBlock Text="Amount: "  Width="150" />
+            <TextBox Text="{Binding Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="400" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+            <TextBlock Text="Fee: "  Width="150" />
+            <TextBox Text="{Binding Fee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="400" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+            <TextBlock Text="Deadline (hours): "  Width="150" />
+            <TextBox Text="{Binding Deadline, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="200" />
+            <TextBlock Text="{Binding DeadlineInDateTime}" Margin="5 0 0 0"   />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Right" Height="24" >
+            <Button Content="Transfer funds" Margin="0 0 10 0" Padding="15 0 15 0"  IsDefault="True" Click="TransferFunds" />
+            <Button Content="Cancel" Width="150"   Padding="15 0 15 0" IsCancel="True"/>
+        </StackPanel>
+    </StackPanel>
+</mui:ModernDialog>

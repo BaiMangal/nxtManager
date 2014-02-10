@@ -1,0 +1,71 @@
+﻿<Page x:Class="nxtManager.Pages.Blocks"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+	Title="Blocksxaml">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="Recent Blocks [60]" Margin="0 0 0 10" FontSize="18" />
+        <ScrollViewer Grid.Row="1">
+            <ItemsControl x:Name="RecentBlocksListBox" ItemsSource="{Binding NXTRecentBlocks}"  >
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="0 0 0 1" BorderBrush="LightGray" Margin="5">
+                            <StackPanel Margin="0 0 0 10">
+                                <StackPanel  Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal" ToolTip="Height">
+                                        <Image Source="/Images/blockHeight.png" Margin="2" />
+                                        <TextBlock Text="{Binding height}" Width="150" Margin="2" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" ToolTip="Generator">
+                                        <Image Source="/Images/blockGenerator.png" Margin="2" />
+                                        <TextBlock Text="{Binding generator}" Width="250" Margin="2" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" ToolTip="Timestamp">
+                                        <Image Source="/Images/blockTimestamp.png" Margin="2" />
+                                        <TextBlock Text="{Binding Date}" Width="150" Margin="2" />
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal" ToolTip="Number of transactions">
+                                        <Image Source="/Images/blockNumberOfTransactions.png" Margin="2" />
+                                        <TextBlock Text="{Binding numberOfTransactions}" Width="150" Margin="2" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" ToolTip="Total amount + fee">
+                                        <Image Source="/Images/blockTotalAmountAndFee.png" Margin="2" />
+                                        <TextBlock Text="{Binding totalAmountAndFee}" Width="250" Margin="2" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" ToolTip="Payload length">
+                                        <Image Source="/Images/blockPayloadLength.png" Margin="2" />
+                                        <TextBlock Text="{Binding payloadLength, StringFormat=\{0\} B}" Width="150" Margin="2" />
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal" ToolTip="Version">
+                                        <Image Source="/Images/blockVersion.png" Margin="2" />
+                                        <TextBlock Text="{Binding version}" Width="150" Margin="2" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" ToolTip="Block ID">
+                                        <Image Source="/Images/blockId.png" Margin="2"  />
+                                        <TextBlock Text="{Binding blockID}" Width="250" Margin="2" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" ToolTip="Target" >
+                                        <Image Source="/Images/blockTarget.png" Margin="2" />
+                                        <TextBlock Text="{Binding baseTarget}" Width="150" Margin="2" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Page>

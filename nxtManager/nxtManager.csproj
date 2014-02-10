@@ -1,0 +1,750 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{52A1A3F4-A398-4ADD-8181-DA8BEFF4B7E8}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>nxtManager</RootNamespace>
+    <AssemblyName>nxtManager</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ConsoleControl.WPF">
+      <HintPath>..\packages\ConsoleControlWPF.1.0.3\lib\net40\ConsoleControl.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="ConsoleControlAPI">
+      <HintPath>..\packages\ConsoleControlWPF.1.0.3\lib\net40\ConsoleControlAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="FirstFloor.ModernUI">
+      <HintPath>..\packages\ModernUI.WPF.1.0.5\lib\net40\FirstFloor.ModernUI.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Windows.Shell">
+      <HintPath>..\packages\ModernUI.WPF.1.0.5\lib\net40\Microsoft.Windows.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="BusyIndicator.xaml.cs">
+      <DependentUpon>BusyIndicator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters.cs" />
+    <Compile Include="ModernVersion.xaml.cs">
+      <DependentUpon>ModernVersion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AccountAndTransactions.xaml.cs">
+      <DependentUpon>AccountAndTransactions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Aliases.xaml.cs">
+      <DependentUpon>Aliases.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Blocks.xaml.cs">
+      <DependentUpon>Blocks.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Console.xaml.cs">
+      <DependentUpon>Console.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Peers.xaml.cs">
+      <DependentUpon>Peers.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\State.xaml.cs">
+      <DependentUpon>State.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SendMoneyDialog.xaml.cs">
+      <DependentUpon>SendMoneyDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UnlockAccountDialog.xaml.cs">
+      <DependentUpon>UnlockAccountDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="BusyIndicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ModernVersion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AccountAndTransactions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Aliases.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Blocks.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Console.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Peers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\State.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SendMoneyDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="UnlockAccountDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="nxt-client-0.6.2\nxt\etc\jdbcRealm.properties" />
+    <None Include="nxt-client-0.6.2\nxt\etc\jetty.conf" />
+    <None Include="nxt-client-0.6.2\nxt\etc\keystore" />
+    <None Include="nxt-client-0.6.2\nxt\etc\krb5.ini" />
+    <None Include="nxt-client-0.6.2\nxt\etc\README.spnego" />
+    <None Include="nxt-client-0.6.2\nxt\etc\spnego.conf" />
+    <None Include="nxt-client-0.6.2\nxt\etc\spnego.properties" />
+    <None Include="nxt-client-0.6.2\nxt\lib\ext\.donotdelete" />
+    <None Include="nxt-client-0.6.2\nxt\lib\setuid\libsetuid-linux.so" />
+    <None Include="nxt-client-0.6.2\nxt\lib\setuid\libsetuid-osx.so" />
+    <None Include="nxt-client-0.6.2\nxt\logs\.donotdelete" />
+    <None Include="nxt-client-0.6.2\nxt\modules\.donotdelete" />
+    <None Include="nxt-client-0.6.2\nxt\resources\log4j.properties" />
+    <None Include="nxt-client-0.6.2\nxt\start.d\http.ini" />
+    <None Include="nxt-client-0.6.2\nxt\start.d\nxt.ini" />
+    <None Include="nxt-client-0.6.2\nxt\start.ini" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\doc\package-list" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\Nxt%24Block.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\Nxt%24Transaction%24Attachment.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\Nxt%24Transaction%24ColoredCoinsAskOrderCancellationAttachment.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\Nxt%24Transaction%24ColoredCoinsAskOrderPlacementAttachment.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\Nxt%24Transaction%24ColoredCoinsAssetIssuanceAttachment.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\Nxt%24Transaction%24ColoredCoinsAssetTransferAttachment.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\Nxt%24Transaction%24ColoredCoinsBidOrderCancellationAttachment.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\Nxt%24Transaction%24ColoredCoinsBidOrderPlacementAttachment.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\Nxt%24Transaction%24MessagingAliasAssignmentAttachment.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\Nxt%24Transaction%24MessagingArbitraryMessageAttachment.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\Nxt%24Transaction.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\Nxt.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Account%241.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Account%24GuaranteedBalance.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Account.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Alias.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Asset.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Attachment%241.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Attachment%24ColoredCoinsAskOrderCancellation.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Attachment%24ColoredCoinsAskOrderPlacement.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Attachment%24ColoredCoinsAssetIssuance.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Attachment%24ColoredCoinsAssetTransfer.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Attachment%24ColoredCoinsBidOrderCancellation.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Attachment%24ColoredCoinsBidOrderPlacement.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Attachment%24ColoredCoinsOrderCancellation.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Attachment%24ColoredCoinsOrderPlacement.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Attachment%24MessagingAliasAssignment.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Attachment%24MessagingArbitraryMessage.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Attachment.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Block%241.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Block.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Blockchain%241.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Blockchain%242.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Blockchain%243.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Blockchain%244.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Blockchain%245.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Blockchain%246.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Blockchain%24BlockNotAcceptedException.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Blockchain%24BlockOutOfOrderException.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Blockchain.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\crypto\Crypto.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\crypto\Curve25519%24long10.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\crypto\Curve25519.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Genesis.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\AssignAlias.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\BroadcastTransaction.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\CancelAskOrder.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\CancelBidOrder.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\DecodeHallmark.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\DecodeToken.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetAccount.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetAccountBlockIds.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetAccountCurrentAskOrderIds.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetAccountCurrentBidOrderIds.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetAccountId.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetAccountPublicKey.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetAccountTransactionIds.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetAlias.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetAliasId.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetAliasIds.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetAliasURI.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetAskOrder.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetAskOrderIds.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetAsset.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetAssetIds.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetBalance.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetBidOrder.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetBidOrderIds.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetBlock.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetConstants.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetGuaranteedBalance.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetMyInfo.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetPeer.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetPeers.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetState.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetTime.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetTransaction.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetTransactionBytes.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\GetUnconfirmedTransactionIds.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\HttpRequestHandler.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\IssueAsset.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\JSONResponses.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\ListAccountAliases.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\MarkHost.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\PlaceAskOrder.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\PlaceBidOrder.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\SendMessage.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\SendMoney.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\http\TransferAsset.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Nxt.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\NxtException%24ValidationException.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\NxtException.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Order%241.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Order%24Ask.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Order%24Bid.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Order.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\peer\GetCumulativeDifficulty.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\peer\GetInfo.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\peer\GetMilestoneBlockIds.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\peer\GetNextBlockIds.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\peer\GetNextBlocks.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\peer\GetPeers.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\peer\GetUnconfirmedTransactions.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\peer\Hallmark.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\peer\HttpJSONRequestHandler.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\peer\Peer%241.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\peer\Peer%242.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\peer\Peer%243.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\peer\Peer%24State.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\peer\Peer.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\peer\ProcessBlock.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\peer\ProcessTransactions.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\ThreadPools%241.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\ThreadPools.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Token.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Transaction%241.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Transaction%24NotYetEnabledException.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Transaction%24Type%24ColoredCoins%241.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Transaction%24Type%24ColoredCoins%242.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Transaction%24Type%24ColoredCoins%243.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Transaction%24Type%24ColoredCoins%244.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Transaction%24Type%24ColoredCoins%245.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Transaction%24Type%24ColoredCoins%246.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Transaction%24Type%24ColoredCoins%24ColoredCoinsOrderCancellation.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Transaction%24Type%24ColoredCoins%24ColoredCoinsOrderPlacement.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Transaction%24Type%24ColoredCoins.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Transaction%24Type%24Messaging%241.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Transaction%24Type%24Messaging%242.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Transaction%24Type%24Messaging.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Transaction%24Type%24Payment%241.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Transaction%24Type%24Payment.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Transaction%24Type.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Transaction%24UndoNotSupportedException.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\Transaction.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\user\GenerateAuthorizationToken.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\user\GetInitialData.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\user\GetNewData.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\user\JSONResponses.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\user\LockAccount.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\user\RemoveActivePeer.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\user\RemoveBlacklistedPeer.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\user\RemoveKnownPeer.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\user\SendMoney.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\user\UnlockAccount.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\user\User%241.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\user\User%24UserAsyncListener.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\user\User.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\user\UserRequestHandler.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\util\Convert.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\util\CountingInputStream.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\util\CountingOutputStream.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\util\JSON%241.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\util\JSON.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\util\Logger%241.class" />
+    <None Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\classes\nxt\util\Logger.class" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\nxtAPIwrapper.Account.datasource" />
+    <None Include="Properties\DataSources\nxtAPIwrapper.AccountBalance.datasource" />
+    <None Include="Properties\DataSources\nxtAPIwrapper.Alias.datasource" />
+    <None Include="Properties\DataSources\nxtAPIwrapper.Transaction.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-annotations.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-debug.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-deploy.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-http.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-https.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-ipaccess.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-jaas.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-jmx-remote.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-jmx.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-logging.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-lowresources.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-monitor.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-plus.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-proxy.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-requestlog.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-rewrite.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-setuid.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-spdy-proxy.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-spdy.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-ssl.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-started.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-stats.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-xinetd.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\jetty.xml" />
+    <Resource Include="nxt-client-0.6.2\nxt\etc\webdefault.xml" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\annotations\asm-4.1.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\annotations\asm-commons-4.1.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\annotations\javax.annotation-api-1.2.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jaspi\javax.security.auth.message-1.0.0.v201108011116.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-annotations-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-client-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-continuation-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-deploy-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-http-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-io-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-jaas-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-jaspi-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-jmx-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-jndi-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-plus-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-proxy-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-rewrite-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-schemas-3.1.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-security-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-server-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-servlet-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-servlets-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-util-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-webapp-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jetty-xml-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jndi\javax.activation-1.1.0.v201105071233.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jndi\javax.mail.glassfish-1.4.1.v201005082020.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jndi\javax.transaction-api-1.2.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jsp\javax.el-3.0.0.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jsp\javax.servlet.jsp-2.3.2.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jsp\javax.servlet.jsp-api-2.3.1.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jsp\javax.servlet.jsp.jstl-1.2.0.v201105211821.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jsp\jetty-jsp-jdt-2.3.3.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jsp\org.apache.taglibs.standard.glassfish-1.2.0.v201112081803.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\jsp\org.eclipse.jdt.core-3.8.2.v20130121.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\monitor\jetty-monitor-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\servlet-api-3.1.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\setuid\jetty-setuid-java-1.0.1.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\spdy\spdy-client-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\spdy\spdy-core-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\spdy\spdy-http-common-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\spdy\spdy-http-server-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\spdy\spdy-server-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\websocket\javax-websocket-client-impl-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\websocket\javax-websocket-server-impl-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\websocket\javax.websocket-api-1.0.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\websocket\websocket-api-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\websocket\websocket-client-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\websocket\websocket-common-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\websocket\websocket-server-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\lib\websocket\websocket-servlet-9.1.1.v20140108.jar" />
+    <Resource Include="nxt-client-0.6.2\nxt\MIT-license.txt" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\annotations.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\client.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\continuation.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\debug.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\deploy.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\ext.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\http.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\https.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\ipaccess.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\jaas.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\jaspi.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\jmx-remote.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\jmx.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\jndi.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\jsp.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\jvm.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\logging.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\lowresources.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\monitor.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\npn.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\npn\npn-1.7.0_10.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\npn\npn-1.7.0_11.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\npn\npn-1.7.0_13.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\npn\npn-1.7.0_15.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\npn\npn-1.7.0_17.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\npn\npn-1.7.0_21.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\npn\npn-1.7.0_25.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\npn\npn-1.7.0_4.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\npn\npn-1.7.0_40.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\npn\npn-1.7.0_45.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\npn\npn-1.7.0_5.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\npn\npn-1.7.0_6.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\npn\npn-1.7.0_7.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\npn\npn-1.7.0_9.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\plus.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\proxy.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\requestlog.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\resources.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\rewrite.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\security.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\server.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\servlet.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\servlets.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\setuid.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\spdy.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\ssl.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\stats.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\webapp.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\websocket.mod" />
+    <Content Include="nxt-client-0.6.2\nxt\modules\xinetd.mod" />
+    <Resource Include="nxt-client-0.6.2\nxt\start.d\README.TXT" />
+    <Content Include="nxt-client-0.6.2\nxt\start.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\activeAccounts.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\activePeers.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\admin.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\alias.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\blacklistedPeers.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\allclasses-frame.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\allclasses-noframe.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\constant-values.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\deprecated-list.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\help-doc.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-1.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-10.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-11.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-12.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-13.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-14.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-15.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-16.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-17.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-18.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-19.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-2.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-20.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-21.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-22.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-3.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-4.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-5.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-6.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-7.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-8.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index-files\index-9.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\index.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Account.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Alias.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Asset.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Attachment.ColoredCoinsAskOrderCancellation.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Attachment.ColoredCoinsAskOrderPlacement.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Attachment.ColoredCoinsAssetIssuance.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Attachment.ColoredCoinsAssetTransfer.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Attachment.ColoredCoinsBidOrderCancellation.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Attachment.ColoredCoinsBidOrderPlacement.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Attachment.ColoredCoinsOrderCancellation.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Attachment.ColoredCoinsOrderPlacement.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Attachment.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Attachment.MessagingAliasAssignment.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Attachment.MessagingArbitraryMessage.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Block.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Blockchain.BlockNotAcceptedException.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Blockchain.BlockOutOfOrderException.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Blockchain.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\crypto\Crypto.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\crypto\package-frame.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\crypto\package-summary.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\crypto\package-tree.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Genesis.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\AssignAlias.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\BroadcastTransaction.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\CancelAskOrder.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\CancelBidOrder.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\DecodeHallmark.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\DecodeToken.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetAccount.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetAccountBlockIds.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetAccountCurrentAskOrderIds.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetAccountCurrentBidOrderIds.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetAccountId.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetAccountPublicKey.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetAccountTransactionIds.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetAlias.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetAliasId.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetAliasIds.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetAliasURI.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetAskOrder.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetAskOrderIds.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetAsset.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetAssetIds.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetBalance.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetBidOrder.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetBidOrderIds.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetBlock.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetConstants.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetGuaranteedBalance.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetMyInfo.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetPeer.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetPeers.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetState.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetTime.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetTransaction.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetTransactionBytes.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\GetUnconfirmedTransactionIds.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\HttpRequestHandler.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\IssueAsset.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\JSONResponses.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\ListAccountAliases.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\MarkHost.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\package-frame.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\package-summary.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\package-tree.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\PlaceAskOrder.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\PlaceBidOrder.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\SendMessage.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\SendMoney.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\http\TransferAsset.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Nxt.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\NxtException.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\NxtException.ValidationException.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Order.Ask.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Order.Bid.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Order.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\package-frame.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\package-summary.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\package-tree.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\peer\Hallmark.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\peer\HttpJSONRequestHandler.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\peer\package-frame.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\peer\package-summary.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\peer\package-tree.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\peer\Peer.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\peer\Peer.State.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\ThreadPools.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Token.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Transaction.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Transaction.NotYetEnabledException.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Transaction.Type.ColoredCoins.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Transaction.Type.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Transaction.Type.Messaging.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Transaction.Type.Payment.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\Transaction.UndoNotSupportedException.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\user\package-frame.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\user\package-summary.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\user\package-tree.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\user\User.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\user\UserRequestHandler.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\util\Convert.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\util\CountingInputStream.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\util\CountingOutputStream.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\util\JSON.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\util\Logger.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\util\package-frame.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\util\package-summary.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\nxt\util\package-tree.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\overview-frame.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\overview-summary.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\overview-tree.html" />
+    <Resource Include="nxt-client-0.6.2\nxt\webapps\root\doc\resources\background.gif" />
+    <Resource Include="nxt-client-0.6.2\nxt\webapps\root\doc\resources\tab.gif" />
+    <Resource Include="nxt-client-0.6.2\nxt\webapps\root\doc\resources\titlebar.gif" />
+    <Resource Include="nxt-client-0.6.2\nxt\webapps\root\doc\resources\titlebar_end.gif" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\serialized-form.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doc\stylesheet.css" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\doubleSpendingTransactions.html" />
+    <Resource Include="nxt-client-0.6.2\nxt\webapps\root\icon.png" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\index.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\knownPeers.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\message.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\myTransactions.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\newAccounts.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\orphanedBlocks.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\recentBlocks.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\suspiciousAccounts.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\unconfirmedTransactions.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\update.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\lib\jetty-continuation-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\lib\jetty-servlets-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\lib\jetty-util-9.1.1.v20140108.jar" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\lib\json-simple-1.1.1.jar" />
+    <Resource Include="nxt-client-0.6.2\nxt\webapps\root\WEB-INF\web.xml" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\weirdBlocks.html" />
+    <Content Include="nxt-client-0.6.2\nxt\webapps\root\worker_sha256.js" />
+    <Resource Include="Images\logo.ico" />
+    <Resource Include="Images\logo.jpg" />
+    <Resource Include="Images\blockGenerator.png" />
+    <Resource Include="Images\blockHeight.png" />
+    <Resource Include="Images\blockId.png" />
+    <Resource Include="Images\blockNumberOfTransactions.png" />
+    <Resource Include="Images\blockPayloadLength.png" />
+    <Resource Include="Images\blockTarget.png" />
+    <Resource Include="Images\blockTimestamp.png" />
+    <Resource Include="Images\blockTotalAmountAndFee.png" />
+    <Resource Include="Images\blockVersion.png" />
+    <Resource Include="Images\peerConnected.png" />
+    <Resource Include="Images\peerDisabledWeight.png" />
+    <Resource Include="Images\peerDisconnected.png" />
+    <Resource Include="Images\peerDownloading.png" />
+    <Resource Include="Images\peerEnabledAnnouncedAddress.png" />
+    <Resource Include="Images\peerEnabledWeight.png" />
+    <Resource Include="Images\peerSoftware.png" />
+    <Resource Include="Images\peerUploading.png" />
+    <Resource Include="Images\peerWellKnownAddress.png" />
+    <Resource Include="Images\txAmount.png" />
+    <Resource Include="Images\txDisabledNumberOfConfirmations.png" />
+    <Resource Include="Images\txEnabledNumberOfConfirmations.png" />
+    <Resource Include="Images\txFee.png" />
+    <Resource Include="Images\txRecipient.png" />
+    <Resource Include="Images\txSender.png" />
+    <Resource Include="Images\txTimestamp.png" />
+    <Resource Include="Images\txMyself.png" />
+    <Resource Include="Images\send_disabled.png" />
+    <Resource Include="Images\send_enabled.png" />
+    <Resource Include="Images\accounts_disabled.png" />
+    <Resource Include="Images\accounts_enabled.png" />
+    <Resource Include="Images\blocks_disabled.png" />
+    <Resource Include="Images\blocks_enabled.png" />
+    <Resource Include="Images\locked.png" />
+    <Resource Include="Images\peers_disabled.png" />
+    <Resource Include="Images\peers_enabled.png" />
+    <Resource Include="Images\transactions_disabled.png" />
+    <Resource Include="Images\transactions_enabled.png" />
+    <Resource Include="Images\unlocked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="nxt-client-0.6.2\nxt\bin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\nxtAPIwrapper\nxtAPIwrapper.csproj">
+      <Project>{41082899-c880-4050-a787-7a14803faf81}</Project>
+      <Name>nxtAPIwrapper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)nxt-client-0.6.2\nxt" "$(TargetDir)nxt"  /S/I/D/Y 
+
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
