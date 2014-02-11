@@ -495,7 +495,7 @@ namespace nxtManager
                     if (evt.Result is double)
                     {
                         if ((double)evt.Result == 0)
-                            BusyMessage = "Syncing NXT blockchain. You can't use the app until this is complete. It can take 5-10min.";
+                            BusyMessage = "Syncing NXT blockchain. You can't use the app until this is completed. It can take 5-10min.";
                         else
                             BusyMessage = "Syncing NXT blockchain. Please wait. Current progress is about: " + ((double)evt.Result).ToString("0.00") + "%";
                         worker_checkBlocksDownload.RunWorkerAsync();
