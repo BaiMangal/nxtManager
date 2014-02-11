@@ -557,14 +557,7 @@ namespace nxtManager
         {
             string err = "";
             NXTAccSecureString = secureString;
-
-            ////TODO: Debug!!! Remove
-            //NXTAccSecureString = new SecureString();
-            //foreach (char c in "3ZMwxhHxbLCrzAkmTYaFs2nB235QjJDdbLQVQTsPrmJrAtVVbXB3e26qenQ9JGsV9H5B3vry2vQkQst8")
-            //{
-            //    NXTAccSecureString.AppendChar(c);
-            //}
-
+            
             NXTAcc = NXTApi.getAccountId(ConvertToUnsecureString(NXTAccSecureString), ref err);
 
             UpdateAccount();
