@@ -7,9 +7,9 @@ using System.Windows;
 
 namespace nxtManager
 {
-    public partial class ModernVersion : ModernWindow
+    public partial class NXTManagerMainWindow : ModernWindow
     {
-        public ModernVersion()
+        public NXTManagerMainWindow()
         {
             App.DVM = new ViewModel();
             this.DataContext = App.DVM;

@@ -58,6 +58,11 @@ namespace nxtManager.Pages
             }
         }
 
+        private void LockAccount(object sender, RoutedEventArgs e)
+        {
+            App.DVM.LockAccount();
+        }
+
         public void OnFragmentNavigation(FirstFloor.ModernUI.Windows.Navigation.FragmentNavigationEventArgs e)
         {
         }
@@ -72,11 +77,6 @@ namespace nxtManager.Pages
 
         public void OnNavigatingFrom(FirstFloor.ModernUI.Windows.Navigation.NavigatingCancelEventArgs e)
         {
-        }
-
-        private void LockAccount(object sender, RoutedEventArgs e)
-        {
-            App.DVM.LockAccount();
         }
     }
 }

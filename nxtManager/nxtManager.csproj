@@ -85,8 +85,8 @@
       <DependentUpon>BusyIndicator.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters.cs" />
-    <Compile Include="ModernVersion.xaml.cs">
-      <DependentUpon>ModernVersion.xaml</DependentUpon>
+    <Compile Include="NXTManagerMainWindow.xaml.cs">
+      <DependentUpon>NXTManagerMainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\AccountAndTransactions.xaml.cs">
       <DependentUpon>AccountAndTransactions.xaml</DependentUpon>
@@ -119,7 +119,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ModernVersion.xaml">
+    <Page Include="NXTManagerMainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

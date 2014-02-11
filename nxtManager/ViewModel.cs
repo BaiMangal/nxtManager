@@ -4,15 +4,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace nxtManager
 {
@@ -574,7 +570,6 @@ namespace nxtManager
 
         #region Account Management
 
-
         public void UnlockAccount(SecureString secureString)
         {
             string err = "";
@@ -705,20 +700,6 @@ namespace nxtManager
             }
         }
 
-        #endregion Account Management
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void NotifyPropertyChanged(string propName)
-        {
-            if (this.PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propName));
-            }
-        }
-        #endregion
-
         public SendNXT SendMoney(string recipient, double amount, double fee, double deadline)
         {
             string err = String.Empty;
@@ -752,5 +733,19 @@ namespace nxtManager
             return result;
         }
 
+        #endregion Account Management
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void NotifyPropertyChanged(string propName)
+        {
+            if (this.PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            }
+        }
+
+        #endregion
     }
 }
