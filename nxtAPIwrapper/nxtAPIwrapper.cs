@@ -86,7 +86,7 @@ namespace nxtAPIwrapper
             }
             return nxtPublicKey;
         }
-
+        
         public AccountTransactionIDs getAccountTransactionIDs(string account, string timestamp, ref string err)
         {
             AccountTransactionIDs nxtTransactionIDs = new AccountTransactionIDs();
@@ -105,6 +105,25 @@ namespace nxtAPIwrapper
                 err = e.ToString(); //sek
             }
             return nxtTransactionIDs;
+        }
+        public UnconfirmedTransactionIDs getUnconfirmedTransactionIDs(ref string err)
+        {
+            UnconfirmedTransactionIDs nxtUnconfirmedTransactionIDs = new UnconfirmedTransactionIDs();
+            var path = _path + "/nxt?requestType=getUnconfirmedTransactionIds";
+            var client = new WebClient
+            {
+                Encoding = Encoding.UTF8
+            };
+            try
+            {
+                var rawData = client.DownloadString(path);
+                nxtUnconfirmedTransactionIDs = JsonConvert.DeserializeObject<UnconfirmedTransactionIDs>(rawData);
+            }
+            catch (Exception e)
+            {
+                err = e.ToString(); //sek
+            }
+            return nxtUnconfirmedTransactionIDs;
         }
 
         public AccountBalance getAccountBalance(string accountid, ref string err)

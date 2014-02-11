@@ -28,52 +28,6 @@ namespace nxtManager.Pages
         public Console()
         {
             InitializeComponent();
-            this.Loaded += Console_Loaded;
-            this.Unloaded += Console_Unloaded;
-        }
-
-        private void Console_Loaded(object sender, RoutedEventArgs e)
-        {
-            ModernVersion m_mainform = (ModernVersion)Application.Current.MainWindow;
-            m_mainform.consoleControl.OnProcessOutput += ConsoleControl_OnProcessOutput;
-
-            var consoleOutput = m_mainform.consoleControl.Content as RichTextBox;
-            TextRange textRange = new TextRange(
-                consoleOutput.Document.ContentStart,
-                consoleOutput.Document.ContentEnd
-            );
-            App.DVM.ConsoleOutput = textRange.Text;
-        }
-
-        void Console_Unloaded(object sender, RoutedEventArgs e)
-        {
-            ModernVersion m_mainform = (ModernVersion)Application.Current.MainWindow;
-            m_mainform.consoleControl.OnProcessOutput -= ConsoleControl_OnProcessOutput;
-        }
-
-        void ConsoleControl_OnProcessOutput(object sender, ConsoleControlAPI.ProcessEventArgs args)
-        {
-            ModernVersion m_mainform = (ModernVersion)Application.Current.MainWindow;
-            if (args.Content.Trim().Contains("started successfully"))
-            {
-                //m_mainform.ContentSource = new Uri("/Pages/AccountAndTransactions.xaml", UriKind.Relative);
-            }
-            else if (args.Content.Trim().Contains("stopped."))
-            {
-                Application.Current.Shutdown();
-            }
-            else
-            {
-                if (m_mainform != null && m_mainform.consoleControl != null)
-                {
-                    var consoleOutput = m_mainform.consoleControl.Content as RichTextBox;
-                    TextRange textRange = new TextRange(
-                        consoleOutput.Document.ContentStart,
-                        consoleOutput.Document.ContentEnd
-                    );
-                    App.DVM.ConsoleOutput = textRange.Text;
-                }
-            }
         }
 
         public void OnFragmentNavigation(FirstFloor.ModernUI.Windows.Navigation.FragmentNavigationEventArgs e)

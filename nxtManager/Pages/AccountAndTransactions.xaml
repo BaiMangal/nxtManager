@@ -51,7 +51,10 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <TextBlock Text="My Transactions" HorizontalAlignment="Left" Margin="0 30 0 20" FontSize="18"  />
             <StackPanel Margin="0 0 0 10" Orientation="Horizontal" Grid.Row="1">
@@ -63,7 +66,7 @@
                 <TextBlock Text="Confirmations" Width="80" Margin="26 2 2 2" />
             </StackPanel>
             <ScrollViewer Grid.Row="2">
-                <ItemsControl x:Name="RecentTransactionsListBox" ItemsSource="{Binding NXTAccTransactions}" Grid.Row="1" >
+                <ItemsControl x:Name="RecentTransactionsListBox" ItemsSource="{Binding NXTAccTransactions}" >
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border BorderThickness="0 0 0 1" BorderBrush="LightGray" Margin="5">
@@ -80,7 +83,7 @@
                                         <Image Source="/Images/txSender.png" Margin="2" />
                                         <TextBlock Text="{Binding sender}" Width="180" Margin="2" />
                                     </StackPanel>
-                                    <StackPanel Orientation="Horizontal" ToolTip="Recipient"  Visibility="{Binding Converter={StaticResource transactionToVisibilityConverter}, ConverterParameter=recipient}">
+                                    <StackPanel Orientation="Horizontal" ToolTip="Reciever"  Visibility="{Binding Converter={StaticResource transactionToVisibilityConverter}, ConverterParameter=recipient}">
                                         <Image Source="/Images/txRecipient.png" Margin="2" />
                                         <TextBlock Text="{Binding recipient}" Width="180" Margin="2" />
                                     </StackPanel>
@@ -99,6 +102,52 @@
                                     <StackPanel Orientation="Horizontal" ToolTip="Confirmations">
                                         <Image Source="/Images/txEnabledNumberOfConfirmations.png" Margin="2" />
                                         <TextBlock Text="{Binding formattedConfirmations}" Width="80" Margin="2" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <TextBlock Text="Unconfirmed Transactions" HorizontalAlignment="Left" Margin="0 30 0 20" FontSize="18"  Grid.Row="3"/>
+            <StackPanel Margin="0 0 0 10" Orientation="Horizontal" Grid.Row="4">
+                <TextBlock Text="Date" Width="170" Margin="7 2 2 2"  />
+                <TextBlock Text="Deadline (min)" Width="80" Margin="26 2 2 2" />
+                <TextBlock Text="Sender" Width="180" Margin="26 2 2 2" />
+                <TextBlock Text="Reciever" Width="180" Margin="26 2 2 2" />
+                <TextBlock Text="Amount" Width="80" Margin="26 2 2 2" />
+                <TextBlock Text="Fee" Width="40" Margin="26 2 2 2" />
+            </StackPanel>
+            <ScrollViewer Grid.Row="5">
+                <ItemsControl x:Name="UnconfirmedTransactionsListBox" ItemsSource="{Binding NXTUnconfirmedTransactions}"  >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderThickness="0 0 0 1" BorderBrush="LightGray" Margin="5">
+                                <StackPanel Margin="0 0 0 10" Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal" ToolTip="Date">
+                                        <Image Source="/Images/txTimestamp.png" Margin="2" />
+                                        <TextBlock Text="{Binding Date}" Width="170" Margin="2" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" ToolTip="Deadline"  >
+                                        <Image Source="/Images/txDeadline.png" Margin="2" />
+                                        <TextBlock Text="{Binding deadline}" Width="80" Margin="2" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" ToolTip="Sender" >
+                                        <Image Source="/Images/txSender.png" Margin="2" />
+                                        <TextBlock Text="{Binding sender}" Width="180" Margin="2" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" ToolTip="Reciever" >
+                                        <Image Source="/Images/txRecipient.png" Margin="2" />
+                                        <TextBlock Text="{Binding recipient}" Width="180" Margin="2" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" ToolTip="Amount">
+                                        <Image Source="/Images/txAmount.png" Margin="2" />
+                                        <TextBlock Text="{Binding amount}" Width="80" Margin="2" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" ToolTip="Fee">
+                                        <Image Source="/Images/txFee.png" Margin="2" />
+                                        <TextBlock Text="{Binding fee}" Width="40" Margin="2" />
                                     </StackPanel>
                                 </StackPanel>
                             </Border>

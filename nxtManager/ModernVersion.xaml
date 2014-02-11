@@ -3,7 +3,6 @@
                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                   xmlns:mui="http://firstfloorsoftware.com/ModernUI"
                   ContentSource="/Pages/Console.xaml"
-                  xmlns:WPF="clr-namespace:ConsoleControl.WPF;assembly=ConsoleControl.WPF"
                   Title="nxtManager" Height="300" Width="300"
                   Icon="Images/logo.ico" WindowState="Maximized"
                   >
@@ -19,17 +18,4 @@
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
     </mui:ModernWindow.MenuLinkGroups>
-    <Grid>
-        <WPF:ConsoleControl x:Name="consoleControl" 
-                        x:FieldModifier="public"
-                        SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" 
-                        ScrollViewer.CanContentScroll="True" 
-                        ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                        HorizontalAlignment="Stretch" 
-                        VerticalAlignment="Stretch" 
-                        Visibility="Visible"
-                        >
-
-        </WPF:ConsoleControl>
-    </Grid>
 </mui:ModernWindow>

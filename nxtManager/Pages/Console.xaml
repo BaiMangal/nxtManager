@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:WPF="clr-namespace:ConsoleControl.WPF;assembly=ConsoleControl.WPF"
       xmlns:mui="http://firstfloorsoftware.com/ModernUI"
       xmlns:local="clr-namespace:nxtManager"
       xmlns:converters="clr-namespace:nxtManager.Converters"
@@ -13,21 +12,25 @@
     <Page.Resources>
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter" />
     </Page.Resources>
-    <ScrollViewer>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ScrollViewer>
             <TextBlock x:Name="Output" Text="{Binding ConsoleOutput}" TextWrapping="Wrap" />
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="10 0 0 0" Visibility="{Binding IsLoaded, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=inverted}" Grid.Row="1">
-                <local:BusyIndicator Margin="20 20 0 0">
-                    <local:BusyIndicator.RenderTransform>
-                        <ScaleTransform ScaleX="0.7" ScaleY="0.7" />
-                    </local:BusyIndicator.RenderTransform>
-                </local:BusyIndicator>
-                <TextBlock Text="{Binding BusyMessage}" VerticalAlignment="Top" Margin="-20 8 0 0" FontSize="22" />
-            </StackPanel>
-        </Grid>
-    </ScrollViewer>
+        </ScrollViewer>
+        <StackPanel HorizontalAlignment="Left" 
+                        Orientation="Horizontal" 
+                        Margin="10 0 0 0" 
+                        Visibility="{Binding IsLoaded, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=inverted}" 
+                        Grid.Row="1">
+            <local:BusyIndicator Margin="20 20 0 0">
+                <local:BusyIndicator.RenderTransform>
+                    <ScaleTransform ScaleX="0.7" ScaleY="0.7" />
+                </local:BusyIndicator.RenderTransform>
+            </local:BusyIndicator>
+            <TextBlock Text="{Binding BusyMessage}" VerticalAlignment="Top" Margin="-20 8 0 0" FontSize="22" />
+        </StackPanel>
+    </Grid>
 </Page>

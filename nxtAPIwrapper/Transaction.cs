@@ -21,7 +21,7 @@ namespace nxtAPIwrapper
         public string signature { get; set; }
 
         public DateTime Date { get { return GenesisBlockTime.AddSeconds(Double.Parse(timestamp)).Add(DateTime.Now.Subtract(DateTime.UtcNow)); } }
-        public string formattedConfirmations { get { return ((Double.Parse(confirmations) > 10) ? "10+" : confirmations); } }
+        public string formattedConfirmations { get { return (confirmations != null && (Double.Parse(confirmations) > 10) ? "10+" : confirmations); } }
         public bool IsSenderEqualToRecipient { get { return sender == recipient; } }
     }
 }

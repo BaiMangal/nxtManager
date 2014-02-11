@@ -23,8 +23,8 @@ namespace nxtManager
     /// </summary>
     public partial class SendMoneyDialog : ModernDialog, INotifyPropertyChanged
     {
-        private double deadline = 24;
-        [Range(1, 24, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
+        private double deadline = 900;
+        [Range(1, 900, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
         public double Deadline
         {
             get { return deadline; }
@@ -44,7 +44,7 @@ namespace nxtManager
             set { fee = value; NotifyPropertyChanged("Fee"); }
         }
 
-        private double amount = 10;
+        private double amount;
         [Range(1, Double.MaxValue, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
         public double Amount
         {

@@ -53,12 +53,6 @@
     <ApplicationIcon>Images\logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ConsoleControl.WPF">
-      <HintPath>..\packages\ConsoleControlWPF.1.0.3\lib\net40\ConsoleControl.WPF.dll</HintPath>
-    </Reference>
-    <Reference Include="ConsoleControlAPI">
-      <HintPath>..\packages\ConsoleControlWPF.1.0.3\lib\net40\ConsoleControlAPI.dll</HintPath>
-    </Reference>
     <Reference Include="FirstFloor.ModernUI">
       <HintPath>..\packages\ModernUI.WPF.1.0.5\lib\net40\FirstFloor.ModernUI.dll</HintPath>
     </Reference>
@@ -396,6 +390,7 @@
     <Resource Include="nxt-client-0.6.2\nxt\etc\jetty-xinetd.xml" />
     <Resource Include="nxt-client-0.6.2\nxt\etc\jetty.xml" />
     <Resource Include="nxt-client-0.6.2\nxt\etc\webdefault.xml" />
+    <Resource Include="Images\txDeadline.png" />
     <Content Include="nxt-client-0.6.2\nxt\lib\annotations\asm-4.1.jar" />
     <Content Include="nxt-client-0.6.2\nxt\lib\annotations\asm-commons-4.1.jar" />
     <Content Include="nxt-client-0.6.2\nxt\lib\annotations\javax.annotation-api-1.2.jar" />

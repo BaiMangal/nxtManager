@@ -81,17 +81,17 @@ namespace nxtManager
             }
         }
 
-        private ObservableCollection<Transaction> nxtAccUnconfirmedTransactions;
-        public ObservableCollection<Transaction> NXTAccUnconfirmedTransactions
+        private ObservableCollection<Transaction> nxtUnconfirmedTransactions;
+        public ObservableCollection<Transaction> NXTUnconfirmedTransactions
         {
             get
             {
-                return nxtAccUnconfirmedTransactions;
+                return nxtUnconfirmedTransactions;
             }
             set
             {
-                nxtAccUnconfirmedTransactions = value;
-                NotifyPropertyChanged("NXTAccUnconfirmedTransactions");
+                nxtUnconfirmedTransactions = value;
+                NotifyPropertyChanged("NXTUnconfirmedTransactions");
             }
         }
 
@@ -164,7 +164,7 @@ namespace nxtManager
                 NotifyPropertyChanged("NXTRecentBlocks");
             }
         }
-        
+
         private SecureString nxtAccSecureString;
         public SecureString NXTAccSecureString
         {
@@ -221,6 +221,21 @@ namespace nxtManager
                 NotifyPropertyChanged("IsLoaded");
             }
         }
+
+        private bool isShuttingDown = false;
+        public bool IsShuttingDown
+        {
+            get
+            {
+                return isShuttingDown;
+            }
+            set
+            {
+                isShuttingDown = value;
+                NotifyPropertyChanged("IsShuttingDown");
+            }
+        }
+
         private string busyMessage = "The application is starting. Please wait...";
         public string BusyMessage
         {
@@ -441,8 +456,9 @@ namespace nxtManager
             string err = "";
             NXTServletState = new State();
             NXTApi = new nxtAPI();
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += (s, e) =>
+            bool firstTime = true;
+            BackgroundWorker worker_checkApiStart = new BackgroundWorker();
+            worker_checkApiStart.DoWork += (s, e) =>
             {
                 do
                 {
@@ -450,102 +466,108 @@ namespace nxtManager
                 }
                 while (NXTServletState.version == null);
             };
-            worker.RunWorkerCompleted += (s, e) =>
+            worker_checkApiStart.RunWorkerCompleted += (s, e) =>
             {
-                IsLoaded = true;
-
-                //Get Peers
-                if (NXTPeers == null)
+                var worker_checkBlocksDownload = new BackgroundWorker();
+                worker_checkBlocksDownload.DoWork += (sndr, evt) =>
                 {
-                    NXTPeers = new ObservableCollection<Peer>();
-                    NXTActivePeers = new ObservableCollection<Peer>();
-                }
-                else
-                {
-                    NXTPeers.Clear();
-                    NXTActivePeers.Clear();
-                }
-                var peers = NXTApi.getPeers(ref err);
-                if (peers != null && peers.peers != null)
-                {
-                    foreach (var peer in peers.peers)
+                    if (!firstTime)
                     {
-                        var detailedPeer = NXTApi.getPeerDetails(peer, ref err);
-                        NXTPeers.Add(detailedPeer);
-                        if (detailedPeer.state == 1)
-                            NXTActivePeers.Add(detailedPeer);
+                        Thread.Sleep(2000);
+                        firstTime = false;
                     }
-                }
 
-                //Get Well Known Peers
-                NXTWellKnownPeers = new ObservableCollection<Peer>();
+                    NXTServletState = NXTApi.getState(ref err);
+                    var timestamp = Double.Parse(NXTServletState.time);
+                    var lastBlock = NXTServletState.lastBlock;
+                    var numOfBlocks = Double.Parse(NXTServletState.numberOfBlocks);
+                    var detailedLastBlock = NXTApi.getBlock(lastBlock, ref err);
+                    var lastBlockTimestamp = Double.Parse(detailedLastBlock.timestamp);
+                    var lastBlockHeight = Double.Parse(detailedLastBlock.height);
+                    var currentProgressRate = lastBlockTimestamp / 60 / lastBlockHeight;
+                    var currentProgress = lastBlockTimestamp / timestamp;
+
+                    if (detailedLastBlock.nextBlock == null && timestamp - lastBlockTimestamp < 900)
+                    {
+                        evt.Result = true;
+                    }
+                    else
+                        evt.Result = currentProgress * 100.0;
+                };
+                worker_checkBlocksDownload.RunWorkerCompleted += (sndr, evt) =>
+                {
+                    if (evt.Result is double)
+                    {
+                        if ((double)evt.Result == 0)
+                            BusyMessage = "Syncing NXT blockchain. You can't use the app until this is complete. It can take 5-10min.";
+                        else
+                            BusyMessage = "Syncing NXT blockchain. Please wait. Current progress is about: " + ((double)evt.Result).ToString("0.00") + "%";
+                        worker_checkBlocksDownload.RunWorkerAsync();
+                    }
+                    else if (evt.Result is bool && (bool)evt.Result)
+                    {
+                        OnLoaded();
+                    }
+                };
+                worker_checkBlocksDownload.RunWorkerAsync();
+            };
+            worker_checkApiStart.RunWorkerAsync();
+        }
+
+
+        public void OnLoaded()
+        {
+            string err = "";
+
+            //Get Peers
+            if (NXTPeers == null)
+            {
+                NXTPeers = new ObservableCollection<Peer>();
+                NXTActivePeers = new ObservableCollection<Peer>();
+            }
+            else
+            {
+                NXTPeers.Clear();
+                NXTActivePeers.Clear();
+            }
+            var peers = NXTApi.getPeers(ref err);
+            if (peers != null && peers.peers != null)
+            {
+                foreach (var peer in peers.peers)
+                {
+                    var detailedPeer = NXTApi.getPeerDetails(peer, ref err);
+                    NXTPeers.Add(detailedPeer);
+                    if (detailedPeer.state == 1)
+                        NXTActivePeers.Add(detailedPeer);
+                }
+            }
+
+            //Get Well Known Peers
+            NXTWellKnownPeers = new ObservableCollection<Peer>();
+            if (WellKnownPeers != null)
                 foreach (var peer in WellKnownPeers)
                 {
                     var wellKnownPeer = NXTApi.getPeerDetails(peer, ref err);
                     NXTWellKnownPeers.Add(wellKnownPeer);
                 }
 
-                //Get Blocks
-                NXTApiState = NXTApi.getState(ref err);
-                if (NXTRecentBlocks == null)
-                    NXTRecentBlocks = new ObservableCollection<Block>();
-                else
-                    NXTRecentBlocks.Clear();
-                var prevBlock = NXTApiState.lastBlock;
-                for (int i = 0; i < 60; i++)
-                {
-                    var block = NXTApi.getBlock(prevBlock, ref err);
-                    block.blockID = prevBlock;
-                    NXTRecentBlocks.Add(block);
-                    prevBlock = block.previousBlock;
-                }
-            };
-            worker.RunWorkerAsync();
-        }
-
-        public void KillBackend()
-        {
-            if (!IsExternalAPIBackendUsed)
+            //Get Blocks
+            NXTApiState = NXTApi.getState(ref err);
+            if (NXTRecentBlocks == null)
+                NXTRecentBlocks = new ObservableCollection<Block>();
+            else
+                NXTRecentBlocks.Clear();
+            var prevBlock = NXTApiState.lastBlock;
+            for (int i = 0; i < 60; i++)
             {
-                StopProgram(NXTProcess);
+                var block = NXTApi.getBlock(prevBlock, ref err);
+                block.blockID = prevBlock;
+                NXTRecentBlocks.Add(block);
+                prevBlock = block.previousBlock;
             }
-        }
 
-        // Enumerated type for the control messages sent to the handler routine
-        public enum CtrlTypes : uint
-        {
-            CTRL_C_EVENT = 0,
-            CTRL_BREAK_EVENT,
-            CTRL_CLOSE_EVENT,
-            CTRL_LOGOFF_EVENT = 5,
-            CTRL_SHUTDOWN_EVENT
-        }
 
-        [DllImport("kernel32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool GenerateConsoleCtrlEvent(CtrlTypes dwCtrlEvent, uint dwProcessGroupId);
-
-        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
-        private static extern bool AttachConsole(int processId);
-
-        [DllImport("Kernel32")]
-        public static extern bool SetConsoleCtrlHandler(HandlerRoutine Handler, bool Add);
-
-        [DllImport("Kernel32")]
-        public static extern bool FreeConsole();
-
-        public delegate bool HandlerRoutine(CtrlTypes CtrlType);
-
-        public void StopProgram(Process proc)
-        {
-            if (AttachConsole(proc.Id))
-            {
-                SetConsoleCtrlHandler(null, true);
-                GenerateConsoleCtrlEvent(CtrlTypes.CTRL_C_EVENT, 0);
-                proc.WaitForExit(2000);
-                FreeConsole();
-                SetConsoleCtrlHandler(null, false);
-            }
+            IsLoaded = true;
         }
 
         #endregion Backend logic
@@ -557,7 +579,7 @@ namespace nxtManager
         {
             string err = "";
             NXTAccSecureString = secureString;
-            
+
             NXTAcc = NXTApi.getAccountId(ConvertToUnsecureString(NXTAccSecureString), ref err);
 
             UpdateAccount();
@@ -565,11 +587,8 @@ namespace nxtManager
             AccountUnlocked = true;
         }
 
-        bool isCurrentlyUpdating = false;
         private void UpdateAccount()
         {
-            isCurrentlyUpdating = true;
-
             string err = "";
 
             //Get Balance
@@ -589,6 +608,21 @@ namespace nxtManager
                 }
             }
             AccountControlVisibility = Visibility.Visible;
+
+            //Get Unconfirmed Transactions
+            if (NXTUnconfirmedTransactions == null)
+                NXTUnconfirmedTransactions = new ObservableCollection<Transaction>();
+            else
+                NXTUnconfirmedTransactions.Clear();
+            var unconfirmedTransactionIDs = NXTApi.getUnconfirmedTransactionIDs(ref err);
+            if (unconfirmedTransactionIDs != null && unconfirmedTransactionIDs.unconfirmedTransactionIds != null)
+            {
+                foreach (var id in unconfirmedTransactionIDs.unconfirmedTransactionIds)
+                {
+                    NXTUnconfirmedTransactions.Insert(0, NXTApi.getTransactionDetails(id, ref err));
+                }
+            }
+
 
             //Get Aliases
             if (NXTAccAliases == null)
@@ -638,8 +672,6 @@ namespace nxtManager
             }
 
             AccountControlVisibility = Visibility.Visible;
-            isCurrentlyUpdating = false;
-
 
             UpdateTimer.Change(5000, Timeout.Infinite);
         }
@@ -651,7 +683,7 @@ namespace nxtManager
             NXTAccBalance = null;
             NXTAccSecureString = null;
             NXTAccTransactions = null;
-            NXTAccUnconfirmedTransactions = null;
+            NXTUnconfirmedTransactions = null;
             NXTAccAliases = null;
             AccountControlVisibility = Visibility.Collapsed;
         }
@@ -678,8 +710,6 @@ namespace nxtManager
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private ConsoleControl.WPF.ConsoleControl mainConsoleControlStart;
-
         protected void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null)

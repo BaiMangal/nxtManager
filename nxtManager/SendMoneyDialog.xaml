@@ -17,7 +17,7 @@
             <TextBox Text="{Binding Fee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="400" />
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
-            <TextBlock Text="Deadline (hours): "  Width="150" />
+            <TextBlock Text="Deadline (minutes): "  Width="150" />
             <TextBox Text="{Binding Deadline, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="200" />
             <TextBlock Text="{Binding DeadlineInDateTime}" Margin="5 0 0 0"   />
         </StackPanel>
