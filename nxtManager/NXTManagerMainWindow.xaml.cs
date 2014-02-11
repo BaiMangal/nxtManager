@@ -16,8 +16,8 @@ namespace nxtManager
 
             InitializeComponent();
 
-            this.Loaded += ModernVersion_Loaded;
-            this.Closing += ModernVersion_Closing;
+            this.Loaded += NXTManagerMainWindow_Loaded;
+            this.Closing += NXTManagerMainWindow_Closing;
         }
 
         void DVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -30,13 +30,13 @@ namespace nxtManager
                 MenuLinks.DisplayName = "NXT Manager (beta) - NRS: " + App.DVM.NXTApiState.version;
         }
 
-        void ModernVersion_Loaded(object sender, RoutedEventArgs e)
+        void NXTManagerMainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             App.DVM.PropertyChanged += DVM_PropertyChanged;
             startNXTServer();
         }
 
-        void ModernVersion_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        void NXTManagerMainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (!App.DVM.IsShuttingDown)
             {
@@ -64,13 +64,43 @@ namespace nxtManager
             }
         }
 
+        string javaExec = "java";
         public void startNXTServer()
         {
             try
             {
+                Process info = new Process();
+                info.StartInfo.FileName = javaExec;
+                info.StartInfo.Arguments = " -version";
+                info.StartInfo.UseShellExecute = false;
+                info.StartInfo.CreateNoWindow = true;
+                info.Start();
+            }
+            catch (Exception)
+            {
+                javaExec = @"Java\bin\java.exe";
+
+                try
+                {
+                    Process info = new Process();
+                    info.StartInfo.FileName = javaExec;
+                    info.StartInfo.Arguments = " -version";
+                    info.StartInfo.UseShellExecute = false;
+                    info.StartInfo.CreateNoWindow = true;
+                    info.Start();
+                }
+                catch (Exception)
+                {
+                    ModernDialog.ShowMessage("You need the Java Runtime Environment in order to run the NRS Backend.", "Error", MessageBoxButton.OK);
+                    Environment.Exit(0);
+                }
+            }
+
+            try
+            {
                 Process NRSProcess = new Process();
-                NRSProcess.StartInfo.FileName = "java";
-                NRSProcess.StartInfo.Arguments = "-jar start.jar STOP.PORT=28282 STOP.KEY=BaiMangal";
+                NRSProcess.StartInfo.FileName = javaExec;
+                NRSProcess.StartInfo.Arguments = " -jar start.jar STOP.PORT=28282 STOP.KEY=BaiMangal";
                 NRSProcess.StartInfo.UseShellExecute = false;
                 NRSProcess.StartInfo.CreateNoWindow = true;
                 NRSProcess.StartInfo.RedirectStandardOutput = true;
@@ -86,7 +116,8 @@ namespace nxtManager
             }
             catch (Exception e)
             {
-                ModernDialog.ShowMessage(e.ToString(), "Error", MessageBoxButton.OK);
+                ModernDialog.ShowMessage("There was an error starting the NRS Backend. \r\n\r\nDetails:\r\n" + e.ToString(), "Error", MessageBoxButton.OK);
+                Environment.Exit(0);
             }
         }
 
@@ -135,8 +166,8 @@ namespace nxtManager
             try
             {
                 Process StopNRSProcess = new Process();
-                StopNRSProcess.StartInfo.FileName = "java";
-                StopNRSProcess.StartInfo.Arguments = "-jar start.jar STOP.PORT=28282 STOP.KEY=BaiMangal --stop";
+                StopNRSProcess.StartInfo.FileName = javaExec;
+                StopNRSProcess.StartInfo.Arguments = " -jar start.jar STOP.PORT=28282 STOP.KEY=BaiMangal --stop";
                 StopNRSProcess.StartInfo.UseShellExecute = false;
                 StopNRSProcess.StartInfo.CreateNoWindow = true;
                 StopNRSProcess.StartInfo.WorkingDirectory = "nxt";
@@ -144,7 +175,8 @@ namespace nxtManager
             }
             catch (Exception e)
             {
-                ModernDialog.ShowMessage(e.ToString(), "Error", MessageBoxButton.OK);
+                ModernDialog.ShowMessage("There was an error stopping the NRS Backend. \r\n\r\nDetails:\r\n" + e.ToString(), "Error", MessageBoxButton.OK);
+                Environment.Exit(0);
             }
         }
     }
