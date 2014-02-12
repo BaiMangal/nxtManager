@@ -10,11 +10,11 @@
         <mui:LinkGroup DisplayName="NXT Manager (beta)" x:Name="MenuLinks" >
             <mui:LinkGroup.Links>
                 <mui:Link DisplayName="Account and Transactions" Source="/Pages/AccountAndTransactions.xaml" />
+                <mui:Link DisplayName="Aliases" Source="/Pages/Aliases.xaml" />
                 <mui:Link DisplayName="Peers" Source="/Pages/Peers.xaml" />
                 <mui:Link DisplayName="Blocks" Source="/Pages/Blocks.xaml" />
-                <mui:Link DisplayName="Aliases" Source="/Pages/Aliases.xaml" />
                 <!--<mui:Link DisplayName="System State" Source="/Pages/State.xaml" />-->
-                <mui:Link DisplayName="Console" Source="/Pages/Console.xaml" />
+                <mui:Link x:Name="consoleLink" DisplayName="Console" Source="/Pages/Console.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
     </mui:ModernWindow.MenuLinkGroups>

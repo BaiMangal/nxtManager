@@ -36,10 +36,12 @@ namespace nxtManager.Pages
 
         public void OnNavigatedTo(FirstFloor.ModernUI.Windows.Navigation.NavigationEventArgs e)
         {
+            App.DVM.IsPeersPageOpened = true;
         }
 
         public void OnNavigatingFrom(FirstFloor.ModernUI.Windows.Navigation.NavigatingCancelEventArgs e)
         {
+            App.DVM.IsPeersPageOpened = false;
         }
     }
 }

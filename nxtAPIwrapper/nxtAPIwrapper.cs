@@ -9,12 +9,30 @@ using System.Security.Cryptography;
 using System.Collections.Specialized;
 using System.IO;
 using System.Web;
+using System.Security;
+using System.Runtime.InteropServices;
 
 namespace nxtAPIwrapper
 {
-    public class nxtAPI
+    public class nxtAPIOld
     {
 
+        public static string ConvertToUnsecureString(SecureString secureString)
+        {
+            if (secureString == null)
+                throw new ArgumentNullException("secureString");
+
+            IntPtr unmanagedString = IntPtr.Zero;
+            try
+            {
+                unmanagedString = Marshal.SecureStringToGlobalAllocUnicode(secureString);
+                return Marshal.PtrToStringUni(unmanagedString);
+            }
+            finally
+            {
+                Marshal.ZeroFreeGlobalAllocUnicode(unmanagedString);
+            }
+        }
 
         /*
         * Account requests start here
@@ -22,15 +40,15 @@ namespace nxtAPIwrapper
 
         private string _path;
 
-        public nxtAPI(string path = "http://localhost:7874")
+        public nxtAPIOld(string path = "http://localhost:7874")
         {
             _path = path;
         }
 
-        public Account getAccountId(string secretPhrase, ref string err)
+        public Account getAccountId(SecureString secretPhrase, ref string err)
         {
             Account nxtAccountID = new Account();
-            var path = _path + "/nxt?requestType=getAccountId&secretPhrase=" + HttpUtility.UrlEncode(secretPhrase);
+            var path = _path + "/nxt?requestType=getAccountId&secretPhrase=" + HttpUtility.UrlEncode(ConvertToUnsecureString(secretPhrase));
             var client = new WebClient
             {
                 Encoding = Encoding.UTF8
@@ -170,7 +188,7 @@ namespace nxtAPIwrapper
         * Alias requests start here
         */
 
-        public Alias createAlias(string secretPhrase, string alias, string uri, string fee, string deadline, ref string err)
+        public Alias createAlias(SecureString secretPhrase, string alias, string uri, string fee, string deadline, ref string err)
         {
             Alias nxtAlias = new Alias();
             var client = new WebClient
@@ -180,7 +198,7 @@ namespace nxtAPIwrapper
             try
             {
                 var rawData = client.DownloadString(_path + "/nxt?requestType=assignAlias&secretPhrase=" +
-                    HttpUtility.UrlEncode(secretPhrase) + "&alias=" +
+                    HttpUtility.UrlEncode(ConvertToUnsecureString(secretPhrase)) + "&alias=" +
                     HttpUtility.UrlEncode(alias) + "&uri=" +
                     HttpUtility.UrlEncode(uri) + "&fee=" +
                     HttpUtility.UrlEncode(fee) + "&deadline=" +
@@ -274,7 +292,7 @@ namespace nxtAPIwrapper
         * Arbitrary Messages
         */
 
-        public AM sendAM(string secretPhrase, string recipient, string message, string deadline, ref string err, string referencedTransaction = "")
+        public AM sendAM(SecureString secretPhrase, string recipient, string message, string deadline, ref string err, string referencedTransaction = "")
         {
             AM nxtAM = new AM();
             var client = new WebClient
@@ -285,7 +303,7 @@ namespace nxtAPIwrapper
             {
                 var add_referencedTransaction_to_URL = (referencedTransaction == "") ? "" : "&referencedTransaction=" + HttpUtility.UrlEncode(referencedTransaction);
                 var rawData = client.DownloadString(_path + "/nxt?requestType=sendMessage&secretPhrase=" +
-                    HttpUtility.UrlEncode(secretPhrase) + "&recipient=" +
+                    HttpUtility.UrlEncode(ConvertToUnsecureString(secretPhrase)) + "&recipient=" +
                     HttpUtility.UrlEncode(recipient) + "&message=" +
                     HttpUtility.UrlEncode(message) + "&deadline=" +
                     HttpUtility.UrlEncode(deadline) + add_referencedTransaction_to_URL);
@@ -347,7 +365,7 @@ namespace nxtAPIwrapper
         }
 
         //send NXT
-        public SendNXT SendMoney(string secretPhrase, string recipient, string amount, ref string err, string fee = "1", string deadline = "900")
+        public SendNXT SendMoney(SecureString secretPhrase, string recipient, string amount, ref string err, string fee = "1", string deadline = "900")
         {
             SendNXT nxtSendResult = new SendNXT();
             var client = new WebClient
@@ -358,7 +376,7 @@ namespace nxtAPIwrapper
             {
                 var rawData = client.DownloadString(_path +
                     "/nxt?requestType=sendMoney&secretPhrase=" +
-                    HttpUtility.UrlEncode(secretPhrase) + "&recipient=" +
+                    HttpUtility.UrlEncode(ConvertToUnsecureString(secretPhrase)) + "&recipient=" +
                     HttpUtility.UrlEncode(recipient) + "&amount=" +
                     HttpUtility.UrlEncode(amount) + "&fee=" +
                     HttpUtility.UrlEncode(fee) + "&deadline=" +
@@ -372,7 +390,7 @@ namespace nxtAPIwrapper
             return nxtSendResult;
         }
 
-        public SendNXT ProcessSendNXT(string secretPhrase, string recipient, string amount, ref string err, string fee = "1", string deadline = "900", string referencedTransaction = "")
+        public SendNXT ProcessSendNXT(SecureString secretPhrase, string recipient, string amount, ref string err, string fee = "1", string deadline = "900", string referencedTransaction = "")
         {
             SendNXT nxtSendMoneyReturn = new SendNXT();
             var client = new WebClient
@@ -382,7 +400,7 @@ namespace nxtAPIwrapper
             try
             {
                 var rawData = client.DownloadString(_path + "/nxt?requestType=sendMoney&secretPhrase=" +
-                    HttpUtility.UrlEncode(secretPhrase) + "&recipient=" +
+                    HttpUtility.UrlEncode(ConvertToUnsecureString(secretPhrase)) + "&recipient=" +
                     HttpUtility.UrlEncode(recipient) + "&fee=" +
                     HttpUtility.UrlEncode(fee) + "&deadline=" +
                     HttpUtility.UrlEncode(deadline) + "&amount=" +
@@ -418,7 +436,7 @@ namespace nxtAPIwrapper
 
 
         //Assets
-        public AssetTransaction issueAsset(string secretPhrase, string assetName, string assetDescription, string assetQuantity, string assetFee, ref string err, string referencedTransaction = "")
+        public AssetTransaction issueAsset(SecureString secretPhrase, string assetName, string assetDescription, string assetQuantity, string assetFee, ref string err, string referencedTransaction = "")
         {
             AssetTransaction nxtAssetTransaction = new AssetTransaction();
             var client = new WebClient
@@ -428,7 +446,7 @@ namespace nxtAPIwrapper
             try
             {
                 var rawData = client.DownloadString(_path + "/nxt?requestType=issueAsset&secretPhrase=" +
-                    HttpUtility.UrlEncode(secretPhrase) + "&name=" +
+                    HttpUtility.UrlEncode(ConvertToUnsecureString(secretPhrase)) + "&name=" +
                     HttpUtility.UrlEncode(assetName) + "&description=" +
                     HttpUtility.UrlEncode(assetDescription) + "&quantity=" +
                     HttpUtility.UrlEncode(assetQuantity) + "&fee=" +
@@ -500,7 +518,7 @@ namespace nxtAPIwrapper
             return nxtAsset;
         }
 
-        public AssetTransaction transferAsset(string secretPhrase, string assetRecipient, string assetID, string assetQuantity, string assetFee, string deadline, ref string err, string referencedTransaction = "")
+        public AssetTransaction transferAsset(SecureString secretPhrase, string assetRecipient, string assetID, string assetQuantity, string assetFee, string deadline, ref string err, string referencedTransaction = "")
         {
             AssetTransaction nxtAssetTransaction = new AssetTransaction();
             var client = new WebClient
@@ -510,7 +528,7 @@ namespace nxtAPIwrapper
             try
             {
                 var rawData = client.DownloadString(_path + "/nxt?requestType=transferAsset&secretPhrase=" +
-                    HttpUtility.UrlEncode(secretPhrase) + "&recipient=" +
+                    HttpUtility.UrlEncode(ConvertToUnsecureString(secretPhrase)) + "&recipient=" +
                     HttpUtility.UrlEncode(assetRecipient) + "&asset=" +
                     HttpUtility.UrlEncode(assetID) + "&quantity=" +
                     HttpUtility.UrlEncode(assetQuantity) + "&fee=" +
@@ -525,7 +543,7 @@ namespace nxtAPIwrapper
             return nxtAssetTransaction;
         }
 
-        public AssetTransaction placeAssetAskOrder(string secretPhrase, string assetID, string assetQuantity, string assetPriceNXTCents, string fee, string deadline, ref string err, string referencedTransaction = "")
+        public AssetTransaction placeAssetAskOrder(SecureString secretPhrase, string assetID, string assetQuantity, string assetPriceNXTCents, string fee, string deadline, ref string err, string referencedTransaction = "")
         {
             AssetTransaction nxtAssetTransaction = new AssetTransaction();
             var client = new WebClient
@@ -535,7 +553,7 @@ namespace nxtAPIwrapper
             try
             {
                 var rawData = client.DownloadString(_path + "/nxt?requestType=placeAskOrder&secretPhrase=" +
-                    HttpUtility.UrlEncode(secretPhrase) + "&asset=" +
+                    HttpUtility.UrlEncode(ConvertToUnsecureString(secretPhrase)) + "&asset=" +
                     HttpUtility.UrlEncode(assetID) + "&quantity=" +
                     HttpUtility.UrlEncode(assetQuantity) + "&quantity=" +
                     HttpUtility.UrlEncode(assetQuantity) + "&price=" +
@@ -551,7 +569,7 @@ namespace nxtAPIwrapper
             return nxtAssetTransaction;
         }
 
-        public AssetTransaction placeAssetBidOrder(string secretPhrase, string assetID, string assetQuantity, string assetPriceNXTCents, string fee, string deadline, ref string err, string referencedTransaction = "")
+        public AssetTransaction placeAssetBidOrder(SecureString secretPhrase, string assetID, string assetQuantity, string assetPriceNXTCents, string fee, string deadline, ref string err, string referencedTransaction = "")
         {
             AssetTransaction nxtAssetTransaction = new AssetTransaction();
             var client = new WebClient
@@ -561,7 +579,7 @@ namespace nxtAPIwrapper
             try
             {
                 var rawData = client.DownloadString(_path + "/nxt?requestType=placeBidOrder&secretPhrase=" +
-                    HttpUtility.UrlEncode(secretPhrase) + "&asset=" +
+                    HttpUtility.UrlEncode(ConvertToUnsecureString(secretPhrase)) + "&asset=" +
                     HttpUtility.UrlEncode(assetID) + "&quantity=" +
                     HttpUtility.UrlEncode(assetQuantity) + "&quantity=" +
                     HttpUtility.UrlEncode(assetQuantity) + "&price=" +
@@ -689,7 +707,7 @@ namespace nxtAPIwrapper
         }
 
 
-        public AssetTransaction cancelAskAssetOrder(string secretPhrase, string order, string fee, string deadline, ref string err, string referencedTransaction = "")
+        public AssetTransaction cancelAskAssetOrder(SecureString secretPhrase, string order, string fee, string deadline, ref string err, string referencedTransaction = "")
         {
             AssetTransaction nxtAssetTransaction = new AssetTransaction();
             var client = new WebClient
@@ -699,7 +717,7 @@ namespace nxtAPIwrapper
             try
             {
                 var rawData = client.DownloadString(_path + "/nxt?requestType=cancelAskOrder&secretPhrase" +
-                    HttpUtility.UrlEncode(secretPhrase) + "&order=" +
+                    HttpUtility.UrlEncode(ConvertToUnsecureString(secretPhrase)) + "&order=" +
                     HttpUtility.UrlEncode(order) + "&fee=" +
                     HttpUtility.UrlEncode(fee) + "&deadline=" +
                     HttpUtility.UrlEncode(deadline) + (referencedTransaction.Length > 0 ? "&referencedTransaction=" + HttpUtility.UrlEncode(referencedTransaction) : ""));
@@ -711,7 +729,7 @@ namespace nxtAPIwrapper
             }
             return nxtAssetTransaction;
         }
-        public AssetTransaction cancelBidAssetOrder(string secretPhrase, string order, string fee, string deadline, ref string err, string referencedTransaction = "")
+        public AssetTransaction cancelBidAssetOrder(SecureString secretPhrase, string order, string fee, string deadline, ref string err, string referencedTransaction = "")
         {
             AssetTransaction nxtAssetTransaction = new AssetTransaction();
             var client = new WebClient
@@ -721,7 +739,7 @@ namespace nxtAPIwrapper
             try
             {
                 var rawData = client.DownloadString(_path + "/nxt?requestType=cancelBidOrder&secretPhrase" +
-                    HttpUtility.UrlEncode(secretPhrase) + "&order=" +
+                    HttpUtility.UrlEncode(ConvertToUnsecureString(secretPhrase)) + "&order=" +
                     HttpUtility.UrlEncode(order) + "&fee=" +
                     HttpUtility.UrlEncode(fee) + "&deadline=" +
                     HttpUtility.UrlEncode(deadline) + (referencedTransaction.Length > 0 ? "&referencedTransaction=" + HttpUtility.UrlEncode(referencedTransaction) : ""));

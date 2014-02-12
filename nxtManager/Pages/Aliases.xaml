@@ -5,13 +5,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:converters="clr-namespace:nxtManager.Converters"
       xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+      xmlns:local="clr-namespace:nxtManager"
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="700"
 	Title="Aliases">
 
     <Page.Resources>
-        <converters:ListToVisibilityConverter x:Key="listToVisibilityConverter" />
+        <converters:AliasListToVisibilityConverter x:Key="listToVisibilityConverter" />
         <converters:InvertedBooleanConverter x:Key="invertedBooleanConverter" />
+        <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter" />
     </Page.Resources>
 
     <Grid>
@@ -28,37 +30,53 @@
             <StackPanel Orientation="Horizontal" Margin="0 5 0 0" Grid.Row="1" >
                 <TextBlock Text="Resolved URI: " Width="150" />
                 <Grid>
-                    <TextBox x:Name="resolvedURI" IsReadOnly="True" BorderThickness="0" />
+                    <TextBox x:Name="resolvedURI" IsReadOnly="True" BorderThickness="0" Background="Transparent" Foreground="Black" />
                     <TextBlock x:Name="noResolvedURI" Text="alias not in use"  Foreground="Gray" />
                 </Grid>
             </StackPanel>
 
-            <StackPanel IsEnabled="{Binding AccountUnlocked}">
-                <TextBlock Text="Create Alias" Margin="0 50 0 20" FontSize="18" />
-                <StackPanel Margin="0 5 0 0" Orientation="Horizontal" HorizontalAlignment="Left">
-                    <TextBlock Text="Alias: " Width="150" />
-                    <TextBox x:Name="alias"  Width="300"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0 5 0 0" HorizontalAlignment="Left">
-                    <TextBlock Text="URI: " Width="150"/>
-                    <TextBox x:Name="uri" Width="300"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0 5 0 0" HorizontalAlignment="Left">
-                    <TextBlock Text="Fee (NXT): " Width="150"/>
-                    <TextBox x:Name="fee" Text="1" Width="300"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0 5 0 0" HorizontalAlignment="Left">
-                    <TextBlock Text="Deadline (minutes): " Width="150"/>
-                    <TextBox x:Name="deadline" Text="900" Width="300"/>
-                </StackPanel>
-                <Button Content="Create Alias" Click="CreateAlias" Width="450" Margin="0 10 0 0" HorizontalAlignment="Left"/>
-
-                <TextBlock Text="List My Aliases" Margin="0 50 0 0"  FontSize="18" />
-            </StackPanel>
-        </StackPanel>
-        <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Margin="0 0 0 20" Grid.Row="1">
             <Grid>
-                <ListBox ItemsSource="{Binding NXTAccAliases}" BorderThickness="0" IsEnabled="{Binding AccountUnlocked}">
+                <StackPanel  Visibility="{Binding AccountControlVisibility}">
+                    <TextBlock Text="Create Alias" Margin="0 50 0 20" FontSize="18" />
+                    <StackPanel Margin="0 5 0 0" Orientation="Horizontal" HorizontalAlignment="Left">
+                        <TextBlock Text="Alias: " Width="130" />
+                        <Grid Width="20">
+                            <Image x:Name="aliasNotFreeImage" Source="/Images/close.png" Visibility="Collapsed" ToolTip="The alias is already taken" />
+                            <Image x:Name="aliasFreeImage" Source="/Images/txEnabledNumberOfConfirmations.png"  ToolTip="The alias is free for registration" Visibility="Collapsed" />
+                        </Grid>
+                        <TextBox x:Name="alias" TextChanged="aliasToCreate_TextChanged"  Width="300"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0 5 0 0" HorizontalAlignment="Left">
+                        <TextBlock Text="URI: " Width="150"/>
+                        <TextBox x:Name="uri" Width="300"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0 5 0 0" HorizontalAlignment="Left">
+                        <TextBlock Text="Fee (NXT): " Width="150"/>
+                        <TextBox x:Name="fee" Text="1" Width="300"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0 5 0 0" HorizontalAlignment="Left">
+                        <TextBlock Text="Deadline (minutes): " Width="150"/>
+                        <TextBox x:Name="deadline" Text="900" Width="300"/>
+                    </StackPanel>
+                    <Button Content="Create Alias" Click="CreateAlias" Width="450" Margin="0 10 0 0" HorizontalAlignment="Left"/>
+
+                    <Grid Visibility="{Binding AccountControlVisibility}" Margin="0 50 0 0">
+                        <TextBlock Text="List My Aliases" FontSize="18" Visibility="{Binding NXTAccAliases, Converter={StaticResource listToVisibilityConverter}}" />
+                    </Grid>
+                </StackPanel>
+
+                <Grid VerticalAlignment="Stretch" Visibility="{Binding IsBusy, Converter={StaticResource boolToVisibilityConverter}}" Margin="0 40 0 30" Width="465" HorizontalAlignment="Left">
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Opacity="0.8" Background="White" />
+                    <local:BusyIndicator HorizontalAlignment="Center" VerticalAlignment="Center" Margin="45 45 0 0 " />
+                </Grid>
+            </Grid>
+        </StackPanel>
+        <Grid Visibility="{Binding AccountControlVisibility}" Margin="0 0 0 20" Grid.Row="1" >
+            <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" 
+                          Visibility="{Binding NXTAccAliases, Converter={StaticResource listToVisibilityConverter}}"
+                          >
+
+                <ListBox ItemsSource="{Binding NXTAccAliases}" BorderThickness="0" IsEnabled="{Binding IsAccountUnlocked}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0 5 5 5">
@@ -74,10 +92,7 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <TextBlock Text="No aliases exist in your account" 
-                           Foreground="Gray" IsEnabled="{Binding AccountUnlocked}"
-                           Visibility="{Binding NXTAccAliases, Converter={StaticResource listToVisibilityConverter}, ConverterParameter=inverse}"/>
-            </Grid>
-        </ScrollViewer>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Page>

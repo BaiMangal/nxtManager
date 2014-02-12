@@ -22,7 +22,7 @@
         </ScrollViewer>
         <StackPanel HorizontalAlignment="Left" 
                         Orientation="Horizontal" 
-                        Margin="10 0 0 0" 
+                        Margin="10 30 0 0" 
                         Visibility="{Binding IsLoaded, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=inverted}" 
                         Grid.Row="1">
             <local:BusyIndicator Margin="20 20 0 0">

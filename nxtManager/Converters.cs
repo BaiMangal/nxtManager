@@ -1,6 +1,7 @@
 ﻿using nxtAPIwrapper;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
@@ -44,15 +45,43 @@ namespace nxtManager.Converters
         }
     }
 
-    public class ListToVisibilityConverter : IValueConverter
+    public class AliasListToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             var valueToReturn = Visibility.Collapsed;
-            if (value == null || value is List<Alias> == false)
+            if (value == null || value is ObservableCollection<Alias> == false)
                 return Visibility.Collapsed;
 
-            if (((List<Alias>)value).Count() > 0)
+            if (((ObservableCollection<Alias>)value).Count() > 0)
+                valueToReturn = Visibility.Visible;
+
+
+            if (parameter != null && parameter.ToString() == "inverse")
+            {
+                if (valueToReturn == Visibility.Collapsed)
+                    valueToReturn = Visibility.Visible;
+                else
+                    valueToReturn = Visibility.Collapsed;
+            }
+            return valueToReturn;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class PeersListToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            var valueToReturn = Visibility.Collapsed;
+            if (value == null || value is ObservableCollection<Peer> == false)
+                return Visibility.Collapsed;
+
+            if (((ObservableCollection<Peer>)value).Count() > 0)
                 valueToReturn = Visibility.Visible;
 
 
@@ -139,11 +168,11 @@ namespace nxtManager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value != null && value is string && parameter != null && !String.IsNullOrEmpty(parameter.ToString()) && App.DVM != null && App.DVM.WellKnownPeers != null)
+            if (value != null && value is string && parameter != null && !String.IsNullOrEmpty(parameter.ToString()) && App.DVM != null && App.DVM.WellKnownPeersList != null)
             {
-                if (App.DVM.WellKnownPeers.Contains((string)value) && parameter.ToString() == "wellKnown")
+                if (App.DVM.WellKnownPeersList.Contains((string)value) && parameter.ToString() == "wellKnown")
                     return Visibility.Visible;
-                else if (!(App.DVM.WellKnownPeers.Contains((string)value)) && parameter.ToString() == "regular")
+                else if (!(App.DVM.WellKnownPeersList.Contains((string)value)) && parameter.ToString() == "regular")
                     return Visibility.Visible;
                 else
                     return Visibility.Collapsed;

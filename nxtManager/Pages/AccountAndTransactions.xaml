@@ -26,10 +26,10 @@
         <StackPanel x:Name="TopStackPanel">
             <Grid>
                 <Button Content="Unlock existing account or create a new one" Click="UnlockAccount" Margin="0 10 0 10" HorizontalAlignment="Left" Width="320" 
-                        Visibility="{Binding AccountUnlocked, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=inverted}"
+                        Visibility="{Binding IsAccountUnlocked, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=inverted}"
                         />
                 <Button Content="Close account" Click="LockAccount" Margin="0 10 0 10" HorizontalAlignment="Left" Width="320"   
-                        Visibility="{Binding AccountUnlocked, Converter={StaticResource boolToVisibilityConverter}}"
+                        Visibility="{Binding IsAccountUnlocked, Converter={StaticResource boolToVisibilityConverter}}"
                         />
             </Grid>
 
@@ -44,7 +44,7 @@
                     <TextBlock Text="{Binding NXTAccBalance.formattedUnconfirmedBalance, StringFormat=\{0\} NXT}" Width="200"  />
                 </StackPanel>
 
-                <Button Content="Send money" Click="SendMoney" Margin="0 20 0 10" HorizontalAlignment="Left" Width="320"/>
+                <Button Content="Send NXT" Click="SendMoney" Margin="0 20 0 10" HorizontalAlignment="Left" Width="320" IsEnabled="{Binding IsSendMoneyEnabled}"/>
             </StackPanel>
         </StackPanel>
         <Grid Grid.Row="1" Visibility="{Binding AccountControlVisibility}">
@@ -83,7 +83,7 @@
                                         <Image Source="/Images/txSender.png" Margin="2" />
                                         <TextBlock Text="{Binding sender}" Width="180" Margin="2" />
                                     </StackPanel>
-                                    <StackPanel Orientation="Horizontal" ToolTip="Reciever"  Visibility="{Binding Converter={StaticResource transactionToVisibilityConverter}, ConverterParameter=recipient}">
+                                    <StackPanel Orientation="Horizontal" ToolTip="Receiver"  Visibility="{Binding Converter={StaticResource transactionToVisibilityConverter}, ConverterParameter=recipient}">
                                         <Image Source="/Images/txRecipient.png" Margin="2" />
                                         <TextBlock Text="{Binding recipient}" Width="180" Margin="2" />
                                     </StackPanel>
@@ -115,7 +115,7 @@
                 <TextBlock Text="Date" Width="170" Margin="7 2 2 2"  />
                 <TextBlock Text="Deadline (min)" Width="80" Margin="26 2 2 2" />
                 <TextBlock Text="Sender" Width="180" Margin="26 2 2 2" />
-                <TextBlock Text="Reciever" Width="180" Margin="26 2 2 2" />
+                <TextBlock Text="Receiver" Width="180" Margin="26 2 2 2" />
                 <TextBlock Text="Amount" Width="80" Margin="26 2 2 2" />
                 <TextBlock Text="Fee" Width="40" Margin="26 2 2 2" />
             </StackPanel>
@@ -137,7 +137,7 @@
                                         <Image Source="/Images/txSender.png" Margin="2" />
                                         <TextBlock Text="{Binding sender}" Width="180" Margin="2" />
                                     </StackPanel>
-                                    <StackPanel Orientation="Horizontal" ToolTip="Reciever" >
+                                    <StackPanel Orientation="Horizontal" ToolTip="Receiver" >
                                         <Image Source="/Images/txRecipient.png" Margin="2" />
                                         <TextBlock Text="{Binding recipient}" Width="180" Margin="2" />
                                     </StackPanel>

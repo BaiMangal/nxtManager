@@ -42,20 +42,12 @@ namespace nxtManager.Pages
         {
             UnlockAccountDialog uad = new UnlockAccountDialog();
             var result = uad.ShowDialog();
-            if (result.HasValue && result.Value)
-            {
-
-            }
         }
 
         private void SendMoney(object sender, RoutedEventArgs e)
         {
             SendMoneyDialog smd = new SendMoneyDialog();
             var result = smd.ShowDialog();
-            if (result.HasValue && result.Value)
-            {
-
-            }
         }
 
         private void LockAccount(object sender, RoutedEventArgs e)
@@ -73,10 +65,12 @@ namespace nxtManager.Pages
 
         public void OnNavigatedTo(FirstFloor.ModernUI.Windows.Navigation.NavigationEventArgs e)
         {
+            App.DVM.IsAccountPageOpened = true;
         }
 
         public void OnNavigatingFrom(FirstFloor.ModernUI.Windows.Navigation.NavigatingCancelEventArgs e)
         {
+            App.DVM.IsAccountPageOpened = false;
         }
     }
 }

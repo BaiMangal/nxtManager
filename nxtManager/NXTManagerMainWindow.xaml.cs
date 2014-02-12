@@ -1,8 +1,11 @@
 ﻿using FirstFloor.ModernUI.Windows.Controls;
+using nxtAPIwrapper;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace nxtManager
@@ -11,7 +14,13 @@ namespace nxtManager
     {
         public NXTManagerMainWindow()
         {
-            App.DVM = new ViewModel();
+            string err = String.Empty;
+            var nxtApiState = new NXTApi().GetState(ref err);
+            if (nxtApiState.version != null)
+                App.DVM = new ViewModel(true);
+            else
+                App.DVM = new ViewModel();
+
             this.DataContext = App.DVM;
 
             InitializeComponent();
@@ -28,12 +37,32 @@ namespace nxtManager
                 ContentSource = new Uri("/Pages/Console.xaml", UriKind.Relative);
             if (e.PropertyName == "NXTApiState")
                 MenuLinks.DisplayName = "NXT Manager (beta) - NRS: " + App.DVM.NXTApiState.version;
+            if (e.PropertyName == "IsAPIConnected" && !App.DVM.IsAPIConnected && App.DVM.ExternalNRSActive)
+            {
+                App.Current.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    if (!nrsExitedMessageShown)
+                    {
+                        nrsExitedMessageShown = true;
+                        ModernDialog.ShowMessage("The external NRS that you were using has stopped. The application must now close.", "Error", MessageBoxButton.OK);
+                        Environment.Exit(0);
+                    }
+                }));
+            }
         }
 
         void NXTManagerMainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             App.DVM.PropertyChanged += DVM_PropertyChanged;
-            startNXTServer();
+            if (!App.DVM.ExternalNRSActive)
+            {
+                startNXTServer();
+            }
+            else
+            {
+                var result = ModernDialog.ShowMessage("You are running an external NRS Backend. Note that if you stop it the nxtManager will crash.", "External NRS backend detected", MessageBoxButton.OK);
+                MenuLinks.Links.Remove(consoleLink);
+            }
         }
 
         void NXTManagerMainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -44,12 +73,15 @@ namespace nxtManager
                 if (result == MessageBoxResult.Yes)
                 {
                     App.DVM.IsShuttingDown = true;
-                    stopNXTServer();
-                    if (App.DVM.IsLoaded)
+                    if (!App.DVM.ExternalNRSActive)
                     {
-                        e.Cancel = true;
-                        App.DVM.BusyMessage = "The application is closing. Please wait...";
-                        App.DVM.IsLoaded = false;
+                        stopNXTServer();
+                        if (App.DVM.IsLoaded)
+                        {
+                            e.Cancel = true;
+                            App.DVM.BusyMessage = "The application is closing. Please wait...";
+                            App.DVM.IsLoaded = false;
+                        }
                     }
                 }
                 else if (result == MessageBoxResult.No)
@@ -133,6 +165,7 @@ namespace nxtManager
             App.DVM.ConsoleOutput += e.Data + "\n";
         }
 
+        bool nrsExitedMessageShown = false;
         void NRSProcess_Exited(object sender, EventArgs e)
         {
             if (String.IsNullOrEmpty(errorLog) == false)
@@ -155,7 +188,6 @@ namespace nxtManager
             {
                 App.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    ModernDialog.ShowMessage("There was an unidentified error in the NRS backend. Restart the application please.", "Error", MessageBoxButton.OK);
                     Environment.Exit(0);
                 }));
             }

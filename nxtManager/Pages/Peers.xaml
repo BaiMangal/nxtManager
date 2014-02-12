@@ -11,6 +11,7 @@
         <converters:PeerStateToVisibilityConverter x:Key="peerStateToVisibilityConverter" />
         <converters:PeerWeightToVisibilityConverter x:Key="peerWeightToVisibilityConverter" />
         <converters:PeerAddressToVisibilityConverter x:Key="peerAddressToVisibilityConverter" />
+        <converters:PeersListToVisibilityConverter x:Key="listToVisibilityConverter" />
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -20,7 +21,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
-        <TextBlock Text="Active Peers" Margin="0 0 0 10" FontSize="18" />
+        <TextBlock Text="{Binding NXTActivePeers.Count, StringFormat=Active Peers [\{0\}]}" Margin="0 0 0 10" FontSize="18" />
         <StackPanel Margin="0 0 0 10" Orientation="Horizontal" Grid.Row="1">
             <TextBlock Text="Address" Width="200" Margin="7 2 2 2"  />
             <TextBlock Text="Weight" Width="80" Margin="52 2 2 2" />
@@ -34,16 +35,16 @@
                     <DataTemplate>
                         <Border BorderThickness="0 0 0 1" BorderBrush="LightGray" Margin="5">
                             <StackPanel Margin="0 0 0 10" Orientation="Horizontal">
-                                <StackPanel Orientation="Horizontal" ToolTip="Announced Address">
-                                    <Grid>
+                                <StackPanel Orientation="Horizontal" >
+                                    <Grid ToolTip="Connected State">
                                         <Image Source="/Images/peerConnected.png" Visibility="{Binding state, Converter={StaticResource peerStateToVisibilityConverter}, ConverterParameter=connected}" Margin="2" />
                                         <Image Source="/Images/peerDisconnected.png" Visibility="{Binding state, Converter={StaticResource peerStateToVisibilityConverter}, ConverterParameter=disconnected}"  Margin="2" />
                                     </Grid>
-                                    <Grid>
+                                    <Grid ToolTip="Announced Address">
                                         <Image Source="/Images/peerEnabledAnnouncedAddress.png"  Visibility="{Binding announcedAddress, Converter={StaticResource peerAddressToVisibilityConverter}, ConverterParameter=regular}"  Margin="2" />
                                         <Image Source="/Images/peerWellKnownAddress.png"  Visibility="{Binding announcedAddress, Converter={StaticResource peerAddressToVisibilityConverter}, ConverterParameter=wellKnown}" Margin="2" />
                                     </Grid>
-                                    <TextBlock Text="{Binding announcedAddress}" Width="200" Margin="2" />
+                                    <TextBlock Text="{Binding announcedAddress}" Width="200" Margin="2" ToolTip="Announced Address"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" ToolTip="Weight">
                                     <Grid>
@@ -70,13 +71,19 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <TextBlock Text="Well Known Peers" Margin="0 40 0 10" Grid.Row="3" FontSize="18" />
-        <ScrollViewer Grid.Row="4">
+        <TextBlock Text="{Binding NXTWellKnownPeers.Count, StringFormat=Well Known Peers [\{0\}]}" 
+                   Margin="0 40 0 10" 
+                   Grid.Row="3"
+                   FontSize="18" 
+                   Visibility="{Binding NXTWellKnownPeers, Converter={StaticResource listToVisibilityConverter}}"
+                   />
+        <ScrollViewer Grid.Row="4" 
+                   Visibility="{Binding NXTWellKnownPeers, Converter={StaticResource listToVisibilityConverter}}">
             <ItemsControl x:Name="WellKnownPeersListBox" ItemsSource="{Binding NXTWellKnownPeers}"  >
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border BorderThickness="0 0 0 1" BorderBrush="LightGray" Margin="5">
-                            <StackPanel Margin="0 0 0 10" ToolTip="Announced Address" Orientation="Horizontal">
+                            <StackPanel Margin="0 0 0 10" ToolTip="Well Known Address" Orientation="Horizontal">
                                 <Image Source="/Images/peerWellKnownAddress.png" Width="20" Height="20"  Margin="2" />
                                 <TextBlock Text="{Binding announcedAddress}" Width="200" Margin="2" />
                             </StackPanel>

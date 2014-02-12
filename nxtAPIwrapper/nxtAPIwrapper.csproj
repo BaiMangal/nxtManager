@@ -69,6 +69,7 @@
     <Compile Include="AssetTransaction.cs" />
     <Compile Include="AssetBidOrderIDs.cs" />
     <Compile Include="Block.cs" />
+    <Compile Include="NXTApi.cs" />
     <Compile Include="Peers.cs" />
     <Compile Include="Transaction.cs" />
     <Compile Include="ListAliases.cs" />

@@ -2,28 +2,39 @@
                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                   xmlns:mui="http://firstfloorsoftware.com/ModernUI"
-                  Title="Send money"  Width="606" Height="215">
-    <StackPanel Margin="20">
-        <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
-            <TextBlock Text="Recipient: "  Width="150" />
-            <TextBox Text="{Binding Recipient, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="400" />
+                  xmlns:local="clr-namespace:nxtManager"
+                  xmlns:converters="clr-namespace:nxtManager.Converters"
+                  Title="Send money"  Width="606" Height="230">
+    <mui:ModernDialog.Resources>
+        <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter" />
+    </mui:ModernDialog.Resources>
+    <Grid>
+        <StackPanel Margin="20">
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                <TextBlock Text="Recipient: "  Width="150" />
+                <TextBox Text="{Binding Recipient, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="400" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                <TextBlock Text="Amount: "  Width="150" />
+                <TextBox Text="{Binding Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="400" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                <TextBlock Text="Fee: "  Width="150" />
+                <TextBox Text="{Binding Fee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="400" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                <TextBlock Text="Deadline (minutes): "  Width="150" />
+                <TextBox Text="{Binding Deadline, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="200" />
+                <TextBlock Text="{Binding DeadlineInDateTime}" Margin="5 0 0 0"   />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Right" >
+                <Button Content="Transfer NXT" Margin="0 0 10 0" Padding="15 0 15 0"  IsDefault="True" Click="TransferFunds" />
+                <Button Content="Cancel" Width="150"   Padding="15 0 15 0" IsCancel="True"/>
+            </StackPanel>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
-            <TextBlock Text="Amount: "  Width="150" />
-            <TextBox Text="{Binding Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="400" />
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
-            <TextBlock Text="Fee: "  Width="150" />
-            <TextBox Text="{Binding Fee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="400" />
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
-            <TextBlock Text="Deadline (minutes): "  Width="150" />
-            <TextBox Text="{Binding Deadline, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="200" />
-            <TextBlock Text="{Binding DeadlineInDateTime}" Margin="5 0 0 0"   />
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Right" Height="24" >
-            <Button Content="Transfer funds" Margin="0 0 10 0" Padding="15 0 15 0"  IsDefault="True" Click="TransferFunds" />
-            <Button Content="Cancel" Width="150"   Padding="15 0 15 0" IsCancel="True"/>
-        </StackPanel>
-    </StackPanel>
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{Binding IsBusy, Converter={StaticResource boolToVisibilityConverter}}">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Opacity="0.8" Background="White" />
+            <local:BusyIndicator HorizontalAlignment="Center" VerticalAlignment="Center" Margin="45 45 0 0 " />
+        </Grid>
+    </Grid>
 </mui:ModernDialog>
