@@ -14,7 +14,7 @@
             <TextBlock Text="Secret phrase: " Margin="0 0 0 10" />
             <PasswordBox x:Name="SecretPhrase" Width="540" HorizontalAlignment="Left" />
             <StackPanel Orientation="Horizontal" Margin="230 30 0 30" HorizontalAlignment="Left" >
-                <Button Content="Unlock account" Margin="0 0 10 0" Padding="15 0 15 0"  IsDefault="True" Click="Unlock" Width="150"  />
+                <Button x:Name="unlockAccountButton" Content="Unlock account" Margin="0 0 10 0" Padding="15 0 15 0"  IsDefault="True" Click="Unlock" Width="150"  />
                 <Button Content="Cancel" Width="150"   Padding="15 0 15 0" IsCancel="True"/>
             </StackPanel>
             <TextBlock Text="If opening a new account, please note:" FontWeight="Bold"                    

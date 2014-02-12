@@ -132,8 +132,7 @@ namespace nxtAPIwrapper
                 foreach (var peer in WellKnownPeersList)
                 {
                     var peerDetails = GetPeerDetails(peer, ref err);
-                    if (peerDetails.state == 1)
-                        result.Add(peerDetails);
+                    result.Add(peerDetails);
                 }
             }
             return result;

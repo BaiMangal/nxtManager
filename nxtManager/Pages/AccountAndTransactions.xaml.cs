@@ -40,7 +40,13 @@ namespace nxtManager.Pages
 
         private void UnlockAccount(object sender, RoutedEventArgs e)
         {
-            UnlockAccountDialog uad = new UnlockAccountDialog();
+            UnlockAccountDialog uad = new UnlockAccountDialog(AccountCreationType.Unlock);
+            var result = uad.ShowDialog();
+        }
+
+        private void CreateAccount(object sender, RoutedEventArgs e)
+        {
+            UnlockAccountDialog uad = new UnlockAccountDialog(AccountCreationType.Create);
             var result = uad.ShowDialog();
         }
 

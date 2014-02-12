@@ -44,8 +44,12 @@ namespace nxtManager
                     if (!nrsExitedMessageShown)
                     {
                         nrsExitedMessageShown = true;
-                        ModernDialog.ShowMessage("The external NRS that you were using has stopped. The application must now close.", "Error", MessageBoxButton.OK);
-                        Environment.Exit(0);
+                        App.DVM.LockAccount();
+                        startNXTServer();
+                        App.DVM.IsLoaded = false;
+                        ModernDialog.ShowMessage("The external NRS that you were using has stopped. The application must now start the built in one.", "Error", MessageBoxButton.OK);
+
+                        MenuLinks.Links.Add(consoleLink);
                     }
                 }));
             }

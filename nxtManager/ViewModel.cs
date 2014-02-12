@@ -678,6 +678,7 @@ namespace nxtManager
         public void LockAccount()
         {
             IsAccountUnlocked = false;
+            IsAccountUnlockedAndLoaded = false;
             NXTAcc = null;
             NXTAccBalance = null;
             NXTAccSecureString = null;

@@ -15,13 +15,31 @@ namespace nxtManager
             get { return isBusy; }
             set { isBusy = value; NotifyPropertyChanged("IsBusy"); }
         }
-
-        public UnlockAccountDialog()
+        private AccountCreationType accountCreationType;
+        public AccountCreationType AccountCreationType
         {
+            get { return accountCreationType; }
+            set { accountCreationType = value; NotifyPropertyChanged("AccountCreationType"); }
+        }
+
+        public UnlockAccountDialog(AccountCreationType accountCreationType)
+        {
+            AccountCreationType = accountCreationType;
             this.DataContext = this;
             App.DVM.PropertyChanged += DVM_PropertyChanged;
             InitializeComponent();
             this.Buttons = new Button[] { };
+
+            if (AccountCreationType == AccountCreationType.Create)
+            {
+                this.Title = "Create account";
+                this.unlockAccountButton.Content = "Create account";
+            }
+            else if (AccountCreationType == AccountCreationType.Unlock)
+            {
+                this.Title = "Unlock account";
+                this.unlockAccountButton.Content = "Unlock account";
+            }
         }
 
         void DVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -41,6 +59,18 @@ namespace nxtManager
         private void Unlock(object sender, RoutedEventArgs e)
         {
             IsBusy = true;
+
+            if (SecretPhrase.SecurePassword.Length < 30)
+            {
+                ModernDialog.ShowMessage("You should use a secret phrase that is at least 30 symbols.\n" +
+                    "Anything shorter WILL get hacked an you will loose your NXT",
+                    "Secret too short", MessageBoxButton.OK);
+                if (AccountCreationType == AccountCreationType.Create)
+                {
+                    IsBusy = false;
+                    return;
+                }
+            }
 
             App.DVM.UnlockAccount(SecretPhrase.SecurePassword);
         }
@@ -65,5 +95,11 @@ namespace nxtManager
         }
 
         #endregion
+    }
+
+    public enum AccountCreationType
+    {
+        Create,
+        Unlock
     }
 }
