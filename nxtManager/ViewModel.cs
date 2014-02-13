@@ -579,6 +579,19 @@ namespace nxtManager
                 NotifyPropertyChanged("IsBusy");
             }
         }
+        private DateTime nxtForgingDeadline = GenesisBlockTime;
+        public DateTime NXTForgingDeadline
+        {
+            get
+            {
+                return nxtForgingDeadline;
+            }
+            set
+            {
+                nxtForgingDeadline = value;
+                NotifyPropertyChanged("NXTForgingDeadline");
+            }
+        }
 
         #endregion Properties
 
@@ -668,15 +681,27 @@ namespace nxtManager
             string err = String.Empty;
             NXTAccSecureString = secureString;
 
-            //Get Account Id
+            //Get Account Id Task
             var getAccountIdTask = Task.Factory
                 .StartNew(() => NXTApi.GetAccountId(NXTAccSecureString, ref err))
                 .ContinueWith(task => NXTAcc = task.Result)
                 .ContinueWith(task => IsAccountUnlocked = true);
+
+            //Start Forging Task
+            var startForgingTask = Task.Factory
+                .StartNew(() => NXTApi.StartForging(NXTAccSecureString, ref err))
+                .ContinueWith(task => { if (task.Result != null) NXTForgingDeadline = task.Result.Date; });
         }
 
         public void LockAccount()
         {
+            string err = String.Empty;
+            var securePhrase = NXTAccSecureString;
+
+            //Stop Forging Task
+            Task.Factory.StartNew(() => NXTApi.StopForging(securePhrase, ref err));
+
+            NXTForgingDeadline = GenesisBlockTime;
             IsAccountUnlocked = false;
             IsAccountUnlockedAndLoaded = false;
             NXTAcc = null;

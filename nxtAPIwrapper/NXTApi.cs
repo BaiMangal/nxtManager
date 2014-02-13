@@ -372,5 +372,43 @@ namespace nxtAPIwrapper
             return nxtAliasURI;
         }
 
+
+        public StartForgingResult StartForging(SecureString secretPhrase, ref string err)
+        {
+            StartForgingResult startForgingResult = new StartForgingResult();
+            var client = new WebClient
+            {
+                Encoding = Encoding.UTF8
+            };
+            try
+            {
+                var rawData = client.DownloadString(_path + "/nxt?requestType=startForgingURI&secretPhrase=" + HttpUtility.UrlEncode(ConvertToUnsecureString(secretPhrase)));
+                startForgingResult = JsonConvert.DeserializeObject<StartForgingResult>(rawData);
+            }
+            catch (Exception e)
+            {
+                err = e.Message;
+            }
+            return startForgingResult;
+        }
+
+        public StopForgingResult StopForging(SecureString secretPhrase, ref string err)
+        {
+            StopForgingResult stopForgingResult = new StopForgingResult();
+            var client = new WebClient
+            {
+                Encoding = Encoding.UTF8
+            };
+            try
+            {
+                var rawData = client.DownloadString(_path + "/nxt?requestType=stopForgingURI&secretPhrase=" + HttpUtility.UrlEncode(ConvertToUnsecureString(secretPhrase)));
+                stopForgingResult = JsonConvert.DeserializeObject<StopForgingResult>(rawData);
+            }
+            catch (Exception e)
+            {
+                err = e.Message;
+            }
+            return stopForgingResult;
+        }
     }
 }

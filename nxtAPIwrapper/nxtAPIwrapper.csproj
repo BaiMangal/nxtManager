@@ -71,6 +71,8 @@
     <Compile Include="Block.cs" />
     <Compile Include="NXTApi.cs" />
     <Compile Include="Peers.cs" />
+    <Compile Include="StartForgingResult.cs" />
+    <Compile Include="StopForgingResult.cs" />
     <Compile Include="Transaction.cs" />
     <Compile Include="ListAliases.cs" />
     <Compile Include="nxtAPIwrapper.cs" />
