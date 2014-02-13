@@ -174,25 +174,20 @@ namespace nxtManager
         {
             if (String.IsNullOrEmpty(errorLog) == false)
             {
-                FileInfo logFile = new FileInfo(Environment.CurrentDirectory + @"\error.log");
-                if (logFile.Exists)
-                {
-                    logFile.CopyTo(Environment.CurrentDirectory + @"\error.log.bak", true);
-                }
-                var writer = logFile.CreateText();
-                writer.Write(errorLog);
-
                 App.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    ModernDialog.ShowMessage("There was an exception in the NRS backend. The log was saved in: " + logFile.FullName, "Error", MessageBoxButton.OK);
-                    Environment.Exit(0);
+                    ModernDialog.ShowMessage("There was an exception in the NRS backend. The log was saved in: " + Environment.CurrentDirectory + @"\error.log", "Error", MessageBoxButton.OK);
+                    throw new Exception(errorLog);
                 }));
             }
             else
             {
                 App.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    Environment.Exit(0);
+                    if (App.DVM.IsShuttingDown)
+                        Environment.Exit(0);
+                    else
+                        throw new Exception("The NRS process ended unexpectedly.");
                 }));
             }
         }
